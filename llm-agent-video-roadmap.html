@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM & AI Agent 学习路线图 — 视频教程大全</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #2a2a3a;
+  --text: #e8e6f0;
+  --text-dim: #8888aa;
+  --accent-llm: #6366f1;
+  --accent-llm-light: #818cf8;
+  --accent-agent: #f59e0b;
+  --accent-agent-light: #fbbf24;
+  --glow-llm: rgba(99, 102, 241, 0.15);
+  --glow-agent: rgba(245, 158, 11, 0.15);
+  --red: #ef4444;
+  --red-dim: rgba(239, 68, 68, 0.12);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans SC', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2rem;
+  text-align: center;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, rgba(245,158,11,0.05) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Space Mono', monospace;
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease;
+}
+
+.hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.8s ease;
+}
+
+h1 .llm-text { background: linear-gradient(135deg, var(--accent-llm), var(--accent-llm-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--accent-agent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  max-width: 620px;
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.8s 0.2s ease both;
+}
+
+.tab-container {
+  display: flex;
+  gap: 1rem;
+  animation: fadeInUp 0.8s 0.4s ease both;
+}
+
+.tab-btn {
+  padding: 14px 28px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tab-btn.llm-btn::before { background: var(--glow-llm); }
+.tab-btn.agent-btn::before { background: var(--glow-agent); }
+.tab-btn:hover::before, .tab-btn.active::before { opacity: 1; }
+.tab-btn.llm-btn.active { border-color: var(--accent-llm); color: var(--accent-llm-light); }
+.tab-btn.agent-btn.active { border-color: var(--accent-agent); color: var(--accent-agent-light); }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  animation: bounce 2s infinite, fadeIn 1s 1s ease both;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.scroll-hint svg { width: 20px; height: 20px; stroke: var(--text-dim); }
+
+/* Content */
+.content { max-width: 920px; margin: 0 auto; padding: 0 2rem 6rem; position: relative; z-index: 1; }
+
+.roadmap-section { display: none; }
+.roadmap-section.active { display: block; }
+
+/* Phase blocks */
+.phase-block {
+  margin-bottom: 3.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phase-block.visible { opacity: 1; transform: translateY(0); }
+
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1rem;
+}
+
+.phase-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.llm-section .phase-num { background: var(--glow-llm); color: var(--accent-llm-light); border: 1px solid rgba(99,102,241,0.3); }
+.agent-section .phase-num { background: var(--glow-agent); color: var(--accent-agent-light); border: 1px solid rgba(245,158,11,0.3); }
+
+.phase-title-text { font-size: 1.5rem; font-weight: 700; }
+
+.phase-desc {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+}
+
+/* Video cards */
+.video-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.video-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.video-card:hover {
+  border-color: #3a3a50;
+  transform: translateX(4px);
+  background: var(--surface2);
+}
+
+.yt-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--red-dim);
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+.video-info { flex: 1; min-width: 0; }
+
+.video-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.video-title a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.video-title a:hover { border-color: var(--text-dim); }
+
+.badge {
+  font-size: 0.65rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.badge-free { background: rgba(34,197,94,0.12); color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+.badge-cn { background: rgba(239,68,68,0.1); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+.badge-course { background: rgba(99,102,241,0.1); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.2); }
+.badge-project { background: rgba(245,158,11,0.1); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+.badge-book { background: rgba(168,85,247,0.1); color: #c4b5fd; border: 1px solid rgba(168,85,247,0.2); }
+
+.video-meta {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.video-meta .channel { font-weight: 500; color: #aaa; }
+
+/* Divider */
+.section-sep {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), transparent);
+  margin: 2.5rem 0;
+}
+
+/* Summary stats */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.llm-section .stat-num { color: var(--accent-llm-light); }
+.agent-section .stat-num { color: var(--accent-agent-light); }
+
+.stat-label { color: var(--text-dim); font-size: 0.8rem; margin-top: 2px; }
+
+/* Topic sub-section */
+.topic-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.6rem;
+  padding-left: 4px;
+}
+
+/* Also-see box */
+.also-see {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255,255,255,0.015);
+  border-radius: 10px;
+  border: 1px dashed var(--border);
+}
+
+.also-see h4 {
+  font-size: 0.78rem;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  color: var(--text-dim);
+}
+
+.also-see p, .also-see a {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+.also-see a { color: var(--text); text-decoration: none; border-bottom: 1px dashed var(--border); }
+.also-see a:hover { border-color: var(--text-dim); }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }
+
+@media (max-width: 640px) {
+  .tab-container { flex-direction: column; width: 100%; }
+  .tab-btn { width: 100%; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span> 2025–2026 · 视频教程专辑</div>
+  <h1><span class="llm-text">LLM</span> & <span class="agent-text">AI Agent</span><br>视频学习路线</h1>
+  <p class="hero-sub">精选 YouTube 视频 + 免费课程，按阶段编排。从零基础到生产部署，每个阶段都有对应的视频教程。</p>
+  <div class="tab-container">
+    <button class="tab-btn llm-btn active" onclick="switchTab('llm')">🧠 LLM 视频教程</button>
+    <button class="tab-btn agent-btn" onclick="switchTab('agent')">🤖 AI Agent 视频教程</button>
+  </div>
+  <div class="scroll-hint">
+    向下滚动
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+  </div>
+</section>
+
+<div class="content">
+
+<!-- ======================== LLM ======================== -->
+<div id="llm-section" class="roadmap-section llm-section active">
+
+<div class="stats-row">
+  <div class="stat-card"><div class="stat-num">50+</div><div class="stat-label">精选视频/课程</div></div>
+  <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">学习阶段</div></div>
+  <div class="stat-card"><div class="stat-num">95%</div><div class="stat-label">免费资源</div></div>
+</div>
+
+<!-- Phase 1 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">01</div>
+    <div class="phase-title-text">数学 & Python 基础</div>
+  </div>
+  <div class="phase-desc">LLM 学习的一切基石。不需要精通，但需要足够的直觉来理解后续内容。</div>
+
+  <div class="topic-label">📐 数学直觉</div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank">线性代数的本质（Essence of Linear Algebra）</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">3Blue1Brown</span> · 16集 · 可视化讲解向量/矩阵/特征值，直觉为主</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr" target="_blank">微积分的本质（Essence of Calculus）</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">3Blue1Brown</span> · 12集 · 梯度与反向传播的数学基础</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi" target="_blank">Neural Networks（深度学习可视化）</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">3Blue1Brown</span> · 4集 · 神经网络、反向传播直觉动画</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=i_LwzRVP7bg" target="_blank">Mathematics for Machine Learning (Full Course)</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">freeCodeCamp</span> · 6小时+ · 线性代数+概率+微积分一站式</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/playlist?list=PLkDaE6sCZn6FNC6YRfRQc_FbeQrF8BwGI" target="_blank">机器学习数学基础</a><span class="badge badge-cn">中文可选</span></div>
+        <div class="video-meta"><span class="channel">Andrew Ng / DeepLearning.AI</span> · ML Specialization 内嵌数学模块</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-label">🐍 Python & 深度学习框架</div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=rfscVS0vtbw" target="_blank">Learn Python - Full Course for Beginners</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">freeCodeCamp</span> · 4.5小时 · Python 从零开始完整教程</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/playlist?list=PLqnslRFeH2UrcDBWF5mfPGpqQDSta6VK4" target="_blank">PyTorch Tutorials - Complete Beginner Course</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Patrick Loeber</span> · 16集 · PyTorch 入门到实战</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=V_xro1bcAuA" target="_blank">PyTorch for Deep Learning & Machine Learning – Full Course</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">freeCodeCamp / Daniel Bourke</span> · 25小时 · 超详细 PyTorch 全课程</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=Z1Yd7upQs7Y" target="_blank">李宏毅 2024 机器学习课程</a><span class="badge badge-cn">中文</span><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Hung-yi Lee 李宏毅</span> · NTU · 华语 AI 教育标杆，含 LLM 相关内容</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 2 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">02</div>
+    <div class="phase-title-text">Transformer & LLM 核心原理</div>
+  </div>
+  <div class="phase-desc">这是最核心的阶段。从 Attention 机制到 GPT 架构，深入理解大模型运作方式。</div>
+
+  <div class="topic-label">⚡ Transformer 架构</div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=wjZofJX0v4M" target="_blank">Visual Intro to Transformers</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">3Blue1Brown</span> · 27分钟 · 最佳 Transformer 可视化入门</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=eMlx5fFNoYc" target="_blank">Attention in Transformers, Visually Explained</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">3Blue1Brown</span> · Attention 机制深入可视化</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=zjkBMFhNj_g" target="_blank">Illustrated Guide to Transformers Neural Network</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">StatQuest with Josh Starmer</span> · 清晰直白的 Transformer 讲解</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://bbycroft.net/llm" target="_blank">LLM Visualization（交互式 3D 可视化）</a><span class="badge badge-free">免费</span><span class="badge badge-project">交互网站</span></div>
+        <div class="video-meta"><span class="channel">Brendan Bycroft</span> · 网页交互式 · 逐层展示 LLM 内部运作</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-label">🏗️ LLM 概论 & 架构深入</div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=zjkBMFhNj_g" target="_blank">Intro to Large Language Models</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">Andrej Karpathy</span> · 1小时 · 从零理解 LLM 是什么、怎么训练、怎么用</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ" target="_blank">Neural Networks: Zero to Hero（全系列）</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">Andrej Karpathy</span> · ~10集 · 从零手搓神经网络→GPT，神级教程</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=7xTGNNLPyMI" target="_blank">Let's Build GPT: from scratch, in code</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">Andrej Karpathy</span> · 2小时 · 手把手用 Python 从零实现 GPT</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY" target="_blank">Let's Build the GPT Tokenizer</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Andrej Karpathy</span> · 2小时 · BPE Tokenizer 从零实现</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=XfpMkf4rD6E" target="_blank">Stanford CS324: Large Language Models</a><span class="badge badge-free">免费</span><span class="badge badge-course">大学课程</span></div>
+        <div class="video-meta"><span class="channel">Stanford Online</span> · 完整学期课程 · LLM 理论+实践+伦理</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=9vM4p9NN0Ts" target="_blank">Attention Is All You Need (论文精读)</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Yannic Kilcher</span> · 45分钟 · 原始 Transformer 论文逐段讲解</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 3 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">03</div>
+    <div class="phase-title-text">微调、RLHF 与模型对齐</div>
+  </div>
+  <div class="phase-desc">学会如何让基座模型变成听话的助手——指令微调、LoRA、RLHF/DPO 全流程。</div>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=jkrNMKz9pWU" target="_blank">Finetuning Large Language Models (Full Course)</a><span class="badge badge-free">免费</span><span class="badge badge-course">课程</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI / Lamini</span> · 1小时+ · 微调 LLM 全流程</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=eC6Hd1hFvos" target="_blank">Fine-tune Llama 3 with LoRA / QLoRA</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">Trelis Research</span> · LoRA/QLoRA 微调实操，含代码</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=2MBJOuVq380" target="_blank">RLHF: Reinforcement Learning from Human Feedback 讲解</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Hugging Face</span> · RLHF 原理 + InstructGPT 流程</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=NRVaNuG3QoY" target="_blank">DPO (Direct Preference Optimization) 详解</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">AI explained / 多频道</span> · DPO 原理，替代 PPO 的对齐方法</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=qV_rOlHjvvs" target="_blank">Generative AI with LLMs (Full Course)</a><span class="badge badge-free">免费</span><span class="badge badge-course">课程</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI + AWS (Coursera)</span> · 3周 · 预训练→微调→RLHF 完整链路</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=kTO8VxjS5Oo" target="_blank">Create a Large Language Model from Scratch (Python)</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">freeCodeCamp</span> · 7小时 · 从零构建 LLM：数据→训练→生成</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=UPtG_38Oq8o" target="_blank">Unsloth 微调教程 - 2x faster fine-tuning</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">Unsloth AI</span> · 用 Unsloth 快速微调 Llama/Mistral，含 Colab</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 4 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">04</div>
+    <div class="phase-title-text">Prompt Engineering & RAG</div>
+  </div>
+  <div class="phase-desc">大多数 LLM 应用的核心技术栈。学会如何高效与模型对话，以及如何给模型注入外部知识。</div>
+
+  <div class="topic-label">💬 Prompt Engineering</div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=_ZvnD96BRkc" target="_blank">ChatGPT Prompt Engineering for Developers</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI / Andrew Ng + Isa Fulford</span> · 1.5小时 · Prompt 工程最佳实践</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=dOxUroR57xs" target="_blank">Master Prompt Engineering: Full Course</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">freeCodeCamp</span> · 3小时+ · Few-shot, CoT, System Prompt 等全覆盖</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-label">🔍 RAG（检索增强生成）</div>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=T-D1OfcDW1M" target="_blank">RAG from Scratch (Full Playlist)</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">LangChain</span> · 14集系列 · 从零构建 RAG：向量化→检索→生成</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=sVcwVQRHIc8" target="_blank">Building and Evaluating Advanced RAG</a><span class="badge badge-free">免费</span><span class="badge badge-course">课程</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI / LlamaIndex</span> · 高级 RAG 技巧：Re-ranking、Query 优化</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=BrsocJb_fJI" target="_blank">LangChain Crash Course for Beginners</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Techno Tim / 多频道</span> · LangChain 框架快速入门实操</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=qN_2fnOPY-M" target="_blank">LangChain Master Class (2025)</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Brandon Hancock</span> · 5小时 · 20+ 真实用例，LangChain 进阶</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=LhnCsygAvzY" target="_blank">Vector Databases & Embeddings 详解</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">IBM Technology / Fireship</span> · 向量数据库原理 + Pinecone/Chroma 实操</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 5 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">05</div>
+    <div class="phase-title-text">推理优化 & 本地部署</div>
+  </div>
+  <div class="phase-desc">量化、加速、本地运行——让 LLM 在你的机器上快起来。</div>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=Eo1Bt7eGEI8" target="_blank">Run ANY LLM Locally with Ollama</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">NetworkChuck / Matt Williams</span> · Ollama 安装 + 本地运行 Llama/Mistral</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=pGa7fVzywJI" target="_blank">Quantization Explained: GPTQ, AWQ, GGUF</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Trelis Research</span> · 模型量化原理 + 各格式对比</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=0ek_K6JQMO0" target="_blank">vLLM: Fast LLM Serving</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">vLLM / 技术频道</span> · vLLM 部署教程 + 性能基准测试</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=jkfSknOHBSc" target="_blank">Open WebUI + Ollama 搭建私有 ChatGPT</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · 搭建自己的 ChatGPT 界面，完全本地</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 6 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">06</div>
+    <div class="phase-title-text">前沿方向 & 持续学习</div>
+  </div>
+  <div class="phase-desc">多模态、推理增强、最新论文——保持对前沿的敏感。</div>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/@YannicKilcher" target="_blank">Yannic Kilcher（频道）</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Yannic Kilcher</span> · 最新 AI 论文精读、模型发布解析</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/@aiexplained-official" target="_blank">AI Explained（频道）</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">AI Explained</span> · 新模型发布深度分析、行业趋势</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/@Fireship" target="_blank">Fireship（频道）</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Fireship</span> · "100 seconds" 系列 · 快速了解新技术概念</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/@TwoMinutePapers" target="_blank">Two Minute Papers（频道）</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Two Minute Papers</span> · 快速了解最新 AI 研究成果</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="also-see">
+    <h4>📖 配套书籍推荐</h4>
+    <p>Sebastian Raschka —《Build a Large Language Model From Scratch》<br>
+    Maxime Labonne —《The LLM Engineer's Handbook》<br>
+    Chip Huyen —《Designing Machine Learning Systems》<br>
+    Jay Alammar — The Illustrated Transformer / GPT-2（博客文章，免费）</p>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<div class="also-see">
+  <h4>🎓 完整 GitHub 学习仓库（LLM）</h4>
+  <p>
+    <a href="https://github.com/mlabonne/llm-course" target="_blank">mlabonne/llm-course</a> — ⭐47k+，最全 LLM 学习路线 + Colab notebooks<br>
+    <a href="https://github.com/louisfb01/start-llms" target="_blank">louisfb01/start-llms</a> — 从零开始学 LLM 的完整指南<br>
+    <a href="https://huggingface.co/learn/nlp-course" target="_blank">Hugging Face NLP Course</a> — Transformers 库官方课程（免费）<br>
+    <a href="https://llm.university/" target="_blank">Cohere LLM University</a> — LLM 基础到 RAG 到 Agent（免费）
+  </p>
+</div>
+
+</div><!-- end llm-section -->
+
+
+<!-- ======================== AI AGENT ======================== -->
+<div id="agent-section" class="roadmap-section agent-section">
+
+<div class="stats-row">
+  <div class="stat-card"><div class="stat-num">40+</div><div class="stat-label">精选视频/课程</div></div>
+  <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">学习阶段</div></div>
+  <div class="stat-card"><div class="stat-num">90%</div><div class="stat-label">免费资源</div></div>
+</div>
+
+<!-- Agent Phase 1 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">01</div>
+    <div class="phase-title-text">理解 AI Agent & 核心概念</div>
+  </div>
+  <div class="phase-desc">什么是 Agent？它和普通 ChatGPT 有什么区别？从 ReAct 到 Tool Use，建立直觉。</div>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=F8NKVhkZZWI" target="_blank">What are AI Agents?</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">IBM Technology</span> · 10分钟 · AI Agent 概念清晰讲解</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=sal78ACtGTc" target="_blank">Andrew Ng: What's next for AI Agentic workflows</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">Sequoia Capital / Andrew Ng</span> · 30分钟 · 吴恩达讲解 4 大 Agentic 设计模式</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=e3GGrizwBBs" target="_blank">Building Effective Agents (Anthropic 官方)</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Anthropic</span> · Anthropic 关于构建高效 Agent 的最佳实践</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=cdiD-9MMpb0" target="_blank">LLM Powered Autonomous Agents (Lilian Weng 博客配套)</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">多频道讲解</span> · 基于 Lilian Weng 经典博客的视频版讲解</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Agent Phase 2 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">02</div>
+    <div class="phase-title-text">Function Calling & 单 Agent 实战</div>
+  </div>
+  <div class="phase-desc">动手构建第一个 Agent。从 Function Calling 到 LangChain Agent，从 Hello World 到能搜索的助手。</div>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=aqdWSYWC_LI" target="_blank">OpenAI Function Calling Tutorial</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · OpenAI Function Calling / Tool Use 入门实操</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=DjuXACWYkkU" target="_blank">Build AI Agents from Scratch (Python, No Frameworks)</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · 不用任何框架，纯 Python 从零实现 Agent</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=TFa539R09EQ" target="_blank">Functions, Tools and Agents with LangChain (Full Course)</a><span class="badge badge-free">免费</span><span class="badge badge-course">课程</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI / Harrison Chase</span> · LangChain Agent 全流程教学</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=AxIJfhPLeXA" target="_blank">OpenAI Agents SDK Tutorial (2025)</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · OpenAI 官方 Agent SDK：工具注册、Handoff、Guardrails</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Agent Phase 3 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">03</div>
+    <div class="phase-title-text">LangGraph 深入 & 设计模式</div>
+  </div>
+  <div class="phase-desc">用 LangGraph 构建有状态、可控的 Agent。掌握 ReAct、Reflection、Plan-and-Execute 等核心模式。</div>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=R8KB-Zcynxc" target="_blank">AI Agents in LangGraph (Full Course)</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI / Harrison Chase + Rotem Weiss</span> · LangGraph Agent 从零构建 + 持久化 + HITL</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=v9fkbTxPzs0" target="_blank">LangGraph Tutorial - Full Crash Course</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · LangGraph 状态图、节点、边、Checkpointing 实操</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=Zr6HYQ3iGhY" target="_blank">AI Agentic Design Patterns with AutoGen (Full Course)</a><span class="badge badge-free">免费</span><span class="badge badge-course">课程</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI</span> · 4 大设计模式：Reflection、Tool Use、Planning、Multi-Agent</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=PbGxCD_Ftsc" target="_blank">Agent Skills with Anthropic (Full Course)</a><span class="badge badge-free">免费</span><span class="badge badge-course">课程</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI / Anthropic</span> · Claude Agent 技能：搜索、代码执行、工具编排</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Agent Phase 4 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">04</div>
+    <div class="phase-title-text">Multi-Agent 系统（CrewAI / AutoGen）</div>
+  </div>
+  <div class="phase-desc">多个 Agent 协作解决复杂任务。CrewAI 角色扮演团队、AutoGen 多轮对话协作。</div>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=tPZpnXHHSHw" target="_blank">Multi AI Agent Systems with CrewAI (Full Course)</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI / João Moura</span> · CrewAI 多 Agent 系统：角色、任务、工具编排</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=q7XjlHVMR6s" target="_blank">CrewAI Crash Course for Beginners</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · CrewAI 快速入门 + 项目实战</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=CHQK7mEyOu8" target="_blank">AutoGen Tutorial: Build Multi-Agent AI Systems</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · Microsoft AutoGen：多 Agent 对话式协作</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/playlist?list=PLS_o2ayVCKvAbHNDG0_9HzNEiRkLuPBQu" target="_blank">Krish Naik — Agentic AI 全系列 Playlist</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Krish Naik</span> · 涵盖 LangGraph、CrewAI、AutoGen、MCP、Agno 等所有框架</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Agent Phase 5 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">05</div>
+    <div class="phase-title-text">MCP、Tool Ecosystem & Browser Agent</div>
+  </div>
+  <div class="phase-desc">让 Agent 连接真实世界——MCP 标准化工具协议、浏览器 Agent、Computer Use。</div>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=dZZiLi-LuyA" target="_blank">MCP Explained: Model Context Protocol by Anthropic</a><span class="badge badge-free">免费</span><span class="badge badge-course">必看</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · MCP 原理讲解 + 如何开发自己的 MCP Server</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=kQlg01mzOLc" target="_blank">Build Your Own MCP Server (Step by Step)</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · MCP Server 开发实战教程</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=H2t0m4x5kKs" target="_blank">Browser Use — Open Source Browser Agent</a><span class="badge badge-free">免费</span><span class="badge badge-project">实战</span></div>
+        <div class="video-meta"><span class="channel">多频道</span> · 开源浏览器 Agent：让 AI 自动操作网页</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=ODaHJzOyVCQ" target="_blank">Anthropic Computer Use Demo</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Anthropic / 多频道</span> · Claude Computer Use 演示与原理讲解</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Agent Phase 6 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <div class="phase-num">06</div>
+    <div class="phase-title-text">评估、安全与生产部署</div>
+  </div>
+  <div class="phase-desc">从 Demo 到 Production。解决评估、安全、成本、可观测性等工程化挑战。</div>
+
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=2sMpU0VqhLo" target="_blank">Building Agentic RAG with LlamaIndex (Full Course)</a><span class="badge badge-free">免费</span><span class="badge badge-course">课程</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI / LlamaIndex</span> · Agent + RAG 结合：路由、工具选择、多步推理</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=2-RaSt2i7k4" target="_blank">Langfuse: Open Source LLM Observability</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">Langfuse</span> · Agent 追踪、日志、评估的开源平台教程</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">LLM Evaluations Course (Evidently AI)</a><span class="badge badge-free">免费</span><span class="badge badge-course">课程</span></div>
+        <div class="video-meta"><span class="channel">Evidently AI</span> · 10集 · LLM/Agent 评估：自定义 Judge、RAG 评估、对抗测试</div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="yt-icon">▶</div>
+      <div class="video-info">
+        <div class="video-title"><a href="https://www.youtube.com/watch?v=d70vdb5_0XA" target="_blank">Practical Multi AI Agents (DeepLearning.AI 全课程系列)</a><span class="badge badge-free">免费</span></div>
+        <div class="video-meta"><span class="channel">DeepLearning.AI</span> · Agent 部署、评估、生产化最佳实践</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="also-see">
+    <h4>💡 DeepLearning.AI 短课程合集（全部免费）</h4>
+    <p>
+      DeepLearning.AI 的短课程是学习 Agent 最系统的免费资源，建议按以下顺序学：<br><br>
+      ① ChatGPT Prompt Engineering for Developers<br>
+      ② Functions, Tools and Agents with LangChain<br>
+      ③ AI Agents in LangGraph<br>
+      ④ AI Agentic Design Patterns with AutoGen<br>
+      ⑤ Multi AI Agent Systems with CrewAI<br>
+      ⑥ Agent Skills with Anthropic<br>
+      ⑦ Building Agentic RAG with LlamaIndex<br>
+      ⑧ Practical Multi AI Agents & Orchestration<br><br>
+      全部在 <a href="https://www.deeplearning.ai/short-courses/" target="_blank">deeplearning.ai/short-courses</a> 免费观看
+    </p>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<div class="also-see">
+  <h4>🎓 完整 GitHub 学习仓库（AI Agent）</h4>
+  <p>
+    <a href="https://github.com/krishnaik06/Roadmap-To-Learn-Agentic-AI" target="_blank">krishnaik06/Roadmap-To-Learn-Agentic-AI</a> — LangGraph / CrewAI / AutoGen / MCP 全套 Playlist<br>
+    <a href="https://roadmap.sh/ai-agents" target="_blank">roadmap.sh/ai-agents</a> — 互动式 AI Agent 学习路线图<br>
+    <a href="https://github.com/e2b-dev/awesome-ai-agents" target="_blank">e2b-dev/awesome-ai-agents</a> — AI Agent 项目 & 框架收集<br>
+    <a href="https://www.kdnuggets.com/agentic-ai-a-self-study-roadmap" target="_blank">KDnuggets: Agentic AI Self-Study Roadmap</a> — 系统性自学指南
+  </p>
+</div>
+
+<div class="also-see" style="margin-top:1rem;">
+  <h4>📺 推荐持续关注的 YouTube 频道</h4>
+  <p>
+    <a href="https://www.youtube.com/@AndrejKarpathy" target="_blank">Andrej Karpathy</a> — 前 OpenAI / Tesla，LLM 从零教程<br>
+    <a href="https://www.youtube.com/@krishnaik06" target="_blank">Krish Naik</a> — Gen AI / Agent 全系列，更新频繁<br>
+    <a href="https://www.youtube.com/@YannicKilcher" target="_blank">Yannic Kilcher</a> — AI 论文精读<br>
+    <a href="https://www.youtube.com/@Deeplearningai" target="_blank">DeepLearning.AI</a> — Andrew Ng 团队，免费短课程<br>
+    <a href="https://www.youtube.com/@jamesbriggs" target="_blank">James Briggs</a> — LangChain / Pinecone / RAG 实战<br>
+    <a href="https://www.youtube.com/@faborufael" target="_blank">AssemblyAI</a> — LLM 应用教程<br>
+    <a href="https://www.youtube.com/@Fireship" target="_blank">Fireship</a> — 快速技术概念<br>
+    <a href="https://www.youtube.com/@DataScienceDojo" target="_blank">Data Science Dojo</a> — RAG / LangChain / 向量数据库教程<br>
+    <a href="https://www.youtube.com/@IBMTechnology" target="_blank">IBM Technology</a> — AI 概念清晰讲解<br>
+    <a href="https://www.youtube.com/@ArizeAI" target="_blank">Arize AI</a> — LLM 可观测性 / Agent 评估
+  </p>
+</div>
+
+</div><!-- end agent-section -->
+
+</div><!-- end content -->
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.roadmap-section').forEach(s => s.classList.remove('active'));
+  
+  if (tab === 'llm') {
+    document.querySelector('.llm-btn').classList.add('active');
+    document.getElementById('llm-section').classList.add('active');
+  } else {
+    document.querySelector('.agent-btn').classList.add('active');
+    document.getElementById('agent-section').classList.add('active');
+  }
+  
+  setTimeout(() => observePhases(), 100);
+  window.scrollTo({ top: document.querySelector('.content').offsetTop - 40, behavior: 'smooth' });
+}
+
+function observePhases() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.phase-block').forEach(phase => {
+    phase.classList.remove('visible');
+    observer.observe(phase);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', observePhases);
+</script>
+</body>
+</html>
