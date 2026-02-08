@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM & AI Agent 中文学习资源大全</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0b0b12;--s1:#13131e;--s2:#1b1b2a;--bd:#282840;--tx:#e4e2f0;--dim:#7e7ea0;--llm:#6366f1;--llm2:#a5b4fc;--ag:#f59e0b;--ag2:#fcd34d;--red:#ef4444;--green:#22c55e;--blue:#3b82f6;--pink:#ec4899}
+body{background:var(--bg);color:var(--tx);font-family:'Noto Sans SC',system-ui,sans-serif;line-height:1.7}
+
+.header{text-align:center;padding:4rem 1.5rem 3rem;position:relative}
+.header::before{content:'';position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(99,102,241,.07),rgba(245,158,11,.04) 50%,transparent 70%);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:1px solid var(--bd);border-radius:99px;font-size:.75rem;color:var(--dim);letter-spacing:.08em;margin-bottom:1.5rem}
+.badge .dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+h1{font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:900;line-height:1.2;margin-bottom:1rem}
+h1 em{font-style:normal;background:linear-gradient(135deg,var(--llm),var(--llm2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h1 strong{font-style:normal;background:linear-gradient(135deg,var(--ag),var(--ag2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:var(--dim);max-width:560px;margin:0 auto 2rem;font-size:.95rem}
+
+.tabs{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.tab{padding:10px 22px;border:2px solid var(--bd);border-radius:10px;background:transparent;color:var(--tx);font-size:.88rem;font-family:inherit;font-weight:500;cursor:pointer;transition:.3s}
+.tab:hover{border-color:#444}
+.tab.active.t-llm{border-color:var(--llm);color:var(--llm2);background:rgba(99,102,241,.08)}
+.tab.active.t-ag{border-color:var(--ag);color:var(--ag2);background:rgba(245,158,11,.08)}
+.tab.active.t-cn{border-color:var(--pink);color:#f9a8d4;background:rgba(236,72,153,.08)}
+
+.wrap{max-width:880px;margin:0 auto;padding:0 1.5rem 5rem}
+.section{display:none}.section.active{display:block}
+
+/* Category headers */
+.cat{margin-bottom:2.5rem}
+.cat-head{display:flex;align-items:center;gap:10px;margin-bottom:.6rem}
+.cat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.cat-title{font-size:1.2rem;font-weight:700}
+.cat-desc{color:var(--dim);font-size:.85rem;margin-bottom:1rem}
+
+/* Resource cards */
+.rc{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:.9rem 1.1rem;margin-bottom:8px;transition:.3s;display:flex;align-items:flex-start;gap:10px}
+.rc:hover{border-color:#3e3e5a;transform:translateX(3px);background:var(--s2)}
+
+.rc-icon{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;margin-top:2px}
+.rc-icon.bili{background:rgba(0,174,236,.12);color:#00aeec}
+.rc-icon.yt{background:rgba(239,68,68,.1);color:var(--red)}
+.rc-icon.gh{background:rgba(139,92,246,.1);color:#a78bfa}
+.rc-icon.bk{background:rgba(168,85,247,.1);color:#c4b5fd}
+.rc-icon.web{background:rgba(59,130,246,.1);color:var(--blue)}
+.rc-icon.dl{background:rgba(34,197,94,.1);color:#4ade80}
+
+.rc-body{flex:1;min-width:0}
+.rc-title{font-weight:600;font-size:.87rem;margin-bottom:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rc-title a{color:var(--tx);text-decoration:none;border-bottom:1px solid transparent;transition:.2s}
+.rc-title a:hover{border-color:var(--dim)}
+.rc-meta{color:var(--dim);font-size:.76rem;line-height:1.6}
+
+.tg{font-size:.6rem;padding:2px 6px;border-radius:4px;font-family:'Space Mono',monospace;white-space:nowrap}
+.tg-free{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.2)}
+.tg-cn{background:rgba(236,72,153,.08);color:#f9a8d4;border:1px solid rgba(236,72,153,.2)}
+.tg-must{background:rgba(99,102,241,.1);color:#a5b4fc;border:1px solid rgba(99,102,241,.2)}
+.tg-proj{background:rgba(245,158,11,.1);color:#fcd34d;border:1px solid rgba(245,158,11,.2)}
+.tg-book{background:rgba(168,85,247,.1);color:#c4b5fd;border:1px solid rgba(168,85,247,.2)}
+
+.divider{border:none;height:1px;background:linear-gradient(to right,transparent,var(--bd),transparent);margin:2rem 0}
+
+.note-box{padding:1.1rem 1.3rem;background:rgba(255,255,255,.015);border-radius:10px;border:1px dashed var(--bd);margin-top:1rem;margin-bottom:1.5rem}
+.note-box h4{font-size:.75rem;font-family:'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem;color:var(--dim)}
+.note-box p,.note-box a{font-size:.82rem;color:var(--dim);line-height:1.8}
+.note-box a{color:var(--tx);text-decoration:none;border-bottom:1px dashed var(--bd)}
+.note-box a:hover{border-color:var(--dim)}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@media(max-width:640px){.tabs{flex-direction:column;padding:0 .5rem}.tab{width:100%}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge"><span class="dot"></span> 中文资源专辑 · 2025–2026</div>
+  <h1><em>LLM</em> & <strong>AI Agent</strong><br>中文学习教程大全</h1>
+  <p class="sub">精选 B站视频、中文 GitHub 开源教程、国内公开课、中文书籍——覆盖从入门到精通的全阶段学习资源</p>
+</div>
+
+<div class="wrap">
+
+<div class="tabs">
+  <button class="tab t-llm active" onclick="sw('llm')">🧠 LLM 中文教程</button>
+  <button class="tab t-ag" onclick="sw('ag')">🤖 AI Agent 中文教程</button>
+  <button class="tab t-cn" onclick="sw('cn')">📚 中文书籍 & GitHub</button>
+</div>
+
+<!-- ======== LLM 中文教程 ======== -->
+<div id="s-llm" class="section active">
+
+<div class="cat">
+  <div class="cat-head"><div class="cat-icon" style="background:rgba(99,102,241,.1);color:var(--llm2)">🎓</div><div class="cat-title">大学公开课（中文讲授）</div></div>
+  <div class="cat-desc">最系统、质量最高的中文 LLM 学习路径</div>
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://www.bilibili.com/video/BV1JA4m1F7e5/" target="_blank">李宏毅 2024/2025 机器学习 + 生成式 AI 课程</a><span class="tg tg-cn">中文</span><span class="tg tg-must">必看</span><span class="tg tg-free">免费</span></div><div class="rc-meta">台湾大学 · 华语 AI 教育标杆，含 Transformer、LLM、Agent 专题 · B站有完整录播</div></div></div>
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://www.bilibili.com/video/BV1BJ4m1e7g8/" target="_blank">李宏毅 — Agent 专题讲解</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">"不愧是李宏毅老师！一口气把 Agent 讲明白" · ReAct / Tool Use / Multi-Agent</div></div></div>
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://space.bilibili.com/1567748478" target="_blank">哈工大王斌 —《语言模型原理与实践》公开课</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">B站/网易云 · GPT / BERT / LoRA / SFT / 推理优化 · 一线项目经验，非常落地</div></div></div>
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://llmbook-zh.github.io/" target="_blank">赵鑫等 —《大语言模型》配套 B站视频课</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">人民大学 · 高教社出版教材配套课程 · bilibili 可看 · 从基础到 RLHF 全覆盖</div></div></div>
+  <div class="rc"><div class="rc-icon web">W</div><div class="rc-body"><div class="rc-title"><a href="https://intro-llm.github.io/" target="_blank">张奇等 —《大规模语言模型：从理论到实践》</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费在线</span></div><div class="rc-meta">复旦 NLP · 在线免费阅读 · Transformer + 分布式训练 + RLHF + DeepSpeed-Chat</div></div></div>
+</div>
+
+<hr class="divider">
+
+<div class="cat">
+  <div class="cat-head"><div class="cat-icon" style="background:rgba(0,174,236,.1);color:#00aeec">📺</div><div class="cat-title">B站精选视频教程</div></div>
+  <div class="cat-desc">按学习阶段排列，从基础到进阶</div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://www.bilibili.com/video/BV1dz6oBWEWx/" target="_blank">隔壁的程序员老王 — 10 分钟弄懂大模型 Skill / Prompt / Agent / MCP</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">谷歌程序员 · 概念梳理清晰 · 适合入门第一课 · 15万+播放</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://www.bilibili.com/video/BV1KSKwzJEEV/" target="_blank">秋芝2046 — 从0开始"做"一个Agent（n8n教程）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">46万+播放 · 搞懂 Agent 和工作流的区别 · n8n 实操搭建</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=Transformer%E6%95%99%E7%A8%8B" target="_blank">B站 Transformer 教程合集（搜索排名前列）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">"目前B站最全最详细的Transformer教程" · 多个UP主版本 · 从理论到实战</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://www.bilibili.com/video/BV1g1CKYUExu/" target="_blank">马士兵 — AI大模型全套教程（LLM+RAG+LangChain+ChatGLM-4+DeepSeek）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">系统性全套教程 · 从 Transformer 到 RAG 到 Agent 到部署</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=RAG%E6%95%99%E7%A8%8B" target="_blank">RAG 入门到实战 62集完整版 / RAGflow 教程</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">多个 UP 主系列 · 多模态 RAG / GraphRAG / NativeRAG · 含本地部署</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=LangGraph%E6%95%99%E7%A8%8B" target="_blank">LangGraph 入门到精通实战教程</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">"翻遍B站，讲的最好的LangGraph教程" · 图构建 Agent · 实际案例</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=LoRA%E5%BE%AE%E8%B0%83" target="_blank">LoRA 微调终极指南 / Qwen3 微调实战</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">"6个问题彻底吃透LoRA原理→调参" · Qwen3 + 个人知识库搭建</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B" target="_blank">提示词工程（Prompt Engineering）教程合集</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">多个 UP 主 · "2小时彻底掌握提示词工程" · 从入门到实战</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=Ollama%E6%95%99%E7%A8%8B" target="_blank">Ollama 本地部署大模型保姆级教程</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">Ollama 下载安装 + 部署 + Open WebUI + Qwen3 本地运行</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=Dify%E6%95%99%E7%A8%8B" target="_blank">Dify 快速入门与 Agent 开发实战</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">0 代码开发 Agent · 多模态文档检索 + AI 数据分析 + Deep Research + 文案生成</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=Coze%E6%95%99%E7%A8%8B" target="_blank">Coze（扣子）从入门到精通全套教程</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">0 基础打造 AI 智能体 · 工作流 + 应用开发 · 多个 UP 主版本</div></div></div>
+</div>
+
+<hr class="divider">
+
+<div class="cat">
+  <div class="cat-head"><div class="cat-icon" style="background:rgba(239,68,68,.1);color:var(--red)">🌐</div><div class="cat-title">YouTube 中文字幕 / 中文讲解</div></div>
+
+  <div class="rc"><div class="rc-icon yt">▶</div><div class="rc-body"><div class="rc-title"><a href="https://www.youtube.com/@lihungyi" target="_blank">吴恩达系列课程（B站中文字幕翻译版）</a><span class="tg tg-cn">中文字幕</span><span class="tg tg-free">免费</span><span class="tg tg-must">必看</span></div><div class="rc-meta">Prompt Engineering / RAG / Agent / Fine-tuning 全系列 · B站搜"吴恩达"即可</div></div></div>
+
+  <div class="rc"><div class="rc-icon yt">▶</div><div class="rc-body"><div class="rc-title"><a href="https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ" target="_blank">Andrej Karpathy — Neural Networks: Zero to Hero（B站有中文字幕版）</a><span class="tg tg-cn">中文字幕</span><span class="tg tg-free">免费</span><span class="tg tg-must">必看</span></div><div class="rc-meta">从零手搓 GPT · B站搜"Karpathy 中文字幕" · 神级系列</div></div></div>
+
+  <div class="rc"><div class="rc-icon yt">▶</div><div class="rc-body"><div class="rc-title"><a href="https://www.youtube.com/watch?v=wjZofJX0v4M" target="_blank">3Blue1Brown — Transformer 可视化（B站有配音/字幕版）</a><span class="tg tg-cn">中文配音</span><span class="tg tg-free">免费</span></div><div class="rc-meta">B站搜 "3Blue1Brown 线性代数/Transformer" · 已有中文配音翻译版</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://space.bilibili.com/1567748478" target="_blank">隔壁的程序员老王（YouTube + B站双平台）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">谷歌工程师 · Agent / MCP / Skill / Claude Code 系列 · 讲解清晰</div></div></div>
+</div>
+
+</div><!-- end LLM section -->
+
+
+<!-- ======== AI Agent 中文教程 ======== -->
+<div id="s-ag" class="section">
+
+<div class="cat">
+  <div class="cat-head"><div class="cat-icon" style="background:rgba(245,158,11,.1);color:var(--ag2)">🤖</div><div class="cat-title">Agent 概念入门（中文）</div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://www.bilibili.com/video/BV1BJ4m1e7g8/" target="_blank">李宏毅 — Agent 是什么？一口气讲明白</a><span class="tg tg-cn">中文</span><span class="tg tg-must">必看</span><span class="tg tg-free">免费</span></div><div class="rc-meta">台大教授 · Manus / Agent 设计模式 / 深度学习视角的 Agent</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://www.bilibili.com/video/BV1dz6oBWEWx/" target="_blank">隔壁老王 — 10分钟讲清楚 Prompt, Agent, MCP</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">谷歌程序员 · 概念辨析入门第一课 · 15万+播放</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=Agent%E6%98%AF%E4%BB%80%E4%B9%88" target="_blank">"精华35分钟讲透AI Agent" / "Agent 从入门到精通"</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">多个 UP 主 · "全网AI Agent讲解得最透彻的教程" · 从概念到实战</div></div></div>
+
+  <div class="rc"><div class="rc-icon yt">▶</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=%E5%90%B4%E6%81%A9%E8%BE%BE+Agent" target="_blank">吴恩达 — Agent 系列课程（B站中文字幕）</a><span class="tg tg-cn">中文字幕</span><span class="tg tg-must">必看</span><span class="tg tg-free">免费</span></div><div class="rc-meta">Agentic Design Patterns / CrewAI / LangGraph / Anthropic Agent Skills · 全部有中文字幕</div></div></div>
+</div>
+
+<hr class="divider">
+
+<div class="cat">
+  <div class="cat-head"><div class="cat-icon" style="background:rgba(245,158,11,.1);color:var(--ag2)">🔧</div><div class="cat-title">Agent 框架实战教程（B站）</div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=LangGraph%E6%95%99%E7%A8%8B" target="_blank">LangGraph 入门到精通实战教程</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">"B站讲的最好的LangGraph教程" · 图状态机 · 构建 Agent 智能体实际案例</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=LangChain%E6%95%99%E7%A8%8B" target="_blank">LangChain 全套中文教程</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">LLM + RAG + OpenAI + Agent + LangChain 全链路 · 多个 UP 主版本</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://www.bilibili.com/video/BV1KSKwzJEEV/" target="_blank">秋芝2046 — 从0开始做一个Agent（n8n实操）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">46万+播放 · Agent vs 工作流 · 三大组件 · n8n 搭建专属 Agent</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=n8n%E6%95%99%E7%A8%8B" target="_blank">n8n 入门到精通教程（30+ 企业级实战项目）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">最完整的 N8N 自动化教学 · AI Agent + Webhook + RAG 一站式</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=Dify+Agent" target="_blank">Dify Agent 开发实战（0代码）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">20 个企业级实战项目 · 多模态文档检索 + Deep Research + 创意文案生成</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=Coze+%E6%99%BA%E8%83%BD%E4%BD%93" target="_blank">Coze（扣子）智能体搭建全套教程</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">字节跳动 Coze · 0 基础搭建 Agent · 工作流 + 插件开发</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=MCP%E6%95%99%E7%A8%8B" target="_blank">MCP 协议讲解 + MCP Server 开发教程</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">Model Context Protocol 原理 · 从零实现 MCP Agent 客户端</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=Claude+Code%E6%95%99%E7%A8%8B" target="_blank">Claude Code 入门到精通教程</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-proj">实战</span></div><div class="rc-meta">"讲的最好的Claude Code教程" · 企业级实战案例 · 手把手教学</div></div></div>
+
+  <div class="rc"><div class="rc-icon bili">B</div><div class="rc-body"><div class="rc-title"><a href="https://search.bilibili.com/all?keyword=12%E9%A1%B9Agent%E6%A1%86%E6%9E%B6" target="_blank">12 项 Agent 开发框架入门与选型对比</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">Coze / Dify / LangChain / LangGraph / AutoGen 等工具对比分析与选型建议</div></div></div>
+</div>
+
+</div><!-- end Agent section -->
+
+
+<!-- ======== 中文书籍 & GitHub ======== -->
+<div id="s-cn" class="section">
+
+<div class="cat">
+  <div class="cat-head"><div class="cat-icon" style="background:rgba(168,85,247,.1);color:#c4b5fd">📖</div><div class="cat-title">中文书籍（LLM & Agent）</div></div>
+
+  <div class="rc"><div class="rc-icon bk">📕</div><div class="rc-body"><div class="rc-title"><a href="https://llmbook-zh.github.io/" target="_blank">赵鑫等 —《大语言模型》</a><span class="tg tg-cn">中文</span><span class="tg tg-book">教材</span></div><div class="rc-meta">高等教育出版社 · 人大团队 · 配套 B站视频课 + GitHub 代码 · 最系统的中文 LLM 教材</div></div></div>
+
+  <div class="rc"><div class="rc-icon bk">📕</div><div class="rc-body"><div class="rc-title"><a href="https://intro-llm.github.io/" target="_blank">张奇等 —《大规模语言模型：从理论到实践》</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费在线</span></div><div class="rc-meta">复旦 NLP · 在线免费阅读 · 语言模型 + 分布式训练 + RLHF + DeepSpeed-Chat</div></div></div>
+
+  <div class="rc"><div class="rc-icon bk">📕</div><div class="rc-body"><div class="rc-title"><a href="https://github.com/liucongg/ChatGPTBook" target="_blank">刘聪 —《ChatGPT 原理与实战》</a><span class="tg tg-cn">中文</span><span class="tg tg-book">书籍</span></div><div class="rc-meta">GitHub 代码开源 · GPT 系列原理 + 微调 + 部署实战</div></div></div>
+
+  <div class="rc"><div class="rc-icon bk">📗</div><div class="rc-body"><div class="rc-title">Sebastian Raschka —《Build a Large Language Model From Scratch》</div><div class="rc-meta">英文 · 2024 年最佳 LLM 入门书 · 从零用 Python 实现 LLM · 有中文翻译项目进行中</div></div></div>
+
+  <div class="rc"><div class="rc-icon bk">📗</div><div class="rc-body"><div class="rc-title">Maxime Labonne —《The LLM Engineer's Handbook》</div><div class="rc-meta">英文 · LLM 工程化手册 · 从设计到部署 LLM 应用 · 2025</div></div></div>
+</div>
+
+<hr class="divider">
+
+<div class="cat">
+  <div class="cat-head"><div class="cat-icon" style="background:rgba(139,92,246,.1);color:#a78bfa">💻</div><div class="cat-title">中文 GitHub 开源教程</div></div>
+
+  <div class="rc"><div class="rc-icon gh">G</div><div class="rc-body"><div class="rc-title"><a href="https://github.com/datawhalechina/happy-llm" target="_blank">Datawhale — Happy-LLM（从零开始的 LLM 原理与实践）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-must">推荐</span></div><div class="rc-meta">7 章完整教程 · NLP→Transformer→LLM→动手搭建→微调→RAG→Agent · 代码实操</div></div></div>
+
+  <div class="rc"><div class="rc-icon gh">G</div><div class="rc-body"><div class="rc-title"><a href="https://github.com/datawhalechina/self-llm" target="_blank">Datawhale — self-llm（开源大模型食用指南）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">各开源模型（Qwen / LLaMA / ChatGLM / DeepSeek）的部署和微调保姆级教程</div></div></div>
+
+  <div class="rc"><div class="rc-icon gh">G</div><div class="rc-body"><div class="rc-title"><a href="https://github.com/datawhalechina/prompt-engineering-for-developers" target="_blank">Datawhale — 面向开发者的 LLM 入门课程（吴恩达中文版）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-must">推荐</span></div><div class="rc-meta">吴恩达课程中文翻译 + 复现 · Prompt Engineering→RAG→微调全流程</div></div></div>
+
+  <div class="rc"><div class="rc-icon gh">G</div><div class="rc-body"><div class="rc-title"><a href="https://github.com/ninehills/blog/issues/97" target="_blank">ninehills — LLM 学习路径和资料汇总</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span><span class="tg tg-must">推荐</span></div><div class="rc-meta">极高质量的中文 LLM 学习路径整理 · 精选【必看】资源标记 · 持续更新</div></div></div>
+
+  <div class="rc"><div class="rc-icon gh">G</div><div class="rc-body"><div class="rc-title"><a href="https://github.com/mlabonne/llm-course" target="_blank">mlabonne/llm-course（⭐47k+，含中文翻译）</a><span class="tg tg-free">免费</span></div><div class="rc-meta">全球最火 LLM 学习仓库 · LLM Scientist + LLM Engineer 双路径 · Colab notebooks</div></div></div>
+
+  <div class="rc"><div class="rc-icon gh">G</div><div class="rc-body"><div class="rc-title"><a href="https://github.com/hiyouga/LLaMA-Factory" target="_blank">LLaMA-Factory — 最流行的中文 LLM 微调工具</a><span class="tg tg-cn">中文文档</span><span class="tg tg-free">免费</span><span class="tg tg-proj">工具</span></div><div class="rc-meta">⭐50k+ · 一站式微调 100+ LLM · LoRA / QLoRA / Full FT · Web UI + CLI</div></div></div>
+
+  <div class="rc"><div class="rc-icon gh">G</div><div class="rc-body"><div class="rc-title"><a href="https://github.com/datawhalechina/easy-rl" target="_blank">Datawhale — EasyRL（蘑菇书，强化学习教程）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">基于李宏毅 RL 课程 · 理解 RLHF 的必要前置知识</div></div></div>
+</div>
+
+<hr class="divider">
+
+<div class="cat">
+  <div class="cat-head"><div class="cat-icon" style="background:rgba(34,197,94,.1);color:#4ade80">🔗</div><div class="cat-title">其他中文学习平台</div></div>
+
+  <div class="rc"><div class="rc-icon dl">D</div><div class="rc-body"><div class="rc-title"><a href="https://huggingface.co/learn/nlp-course" target="_blank">Hugging Face NLP Course</a><span class="tg tg-free">免费</span></div><div class="rc-meta">官方课程 · Transformers 库全面教学 · 部分有社区中文翻译</div></div></div>
+
+  <div class="rc"><div class="rc-icon dl">D</div><div class="rc-body"><div class="rc-title"><a href="https://transformers.run/" target="_blank">Transformers 快速入门（中文）</a><span class="tg tg-cn">中文</span><span class="tg tg-free">免费</span></div><div class="rc-meta">中文教程 · 快速调包 BERT / GPT 系列 · 先上手再深入</div></div></div>
+
+  <div class="rc"><div class="rc-icon dl">D</div><div class="rc-body"><div class="rc-title"><a href="https://www.deeplearning.ai/short-courses/" target="_blank">DeepLearning.AI 短课程（全部免费，B站有中文字幕）</a><span class="tg tg-free">免费</span><span class="tg tg-cn">中文字幕</span></div><div class="rc-meta">Prompt Engineering / LangChain / RAG / Agent / CrewAI / LangGraph 全系列</div></div></div>
+
+  <div class="rc"><div class="rc-icon web">W</div><div class="rc-body"><div class="rc-title"><a href="https://roadmap.sh/ai-agents" target="_blank">roadmap.sh/ai-agents（互动式路线图）</a><span class="tg tg-free">免费</span></div><div class="rc-meta">GitHub 34万+星 · 可视化点击式 AI Agent 学习路线</div></div></div>
+</div>
+
+<div class="note-box">
+  <h4>💡 建议学习顺序</h4>
+  <p>
+    <strong>第一步（基础）：</strong>李宏毅课程 + Datawhale Happy-LLM + 3Blue1Brown 中文配音版<br>
+    <strong>第二步（核心）：</strong>Karpathy 中文字幕版 + Transformer 教程 + 复旦/人大教材<br>
+    <strong>第三步（应用）：</strong>吴恩达中文版系列 + RAG/LangChain B站教程 + LLaMA-Factory 微调<br>
+    <strong>第四步（Agent）：</strong>李宏毅 Agent 专题 + LangGraph 实战 + n8n/Dify/Coze 平台<br>
+    <strong>第五步（进阶）：</strong>MCP 开发 + 多 Agent 系统 + 生产部署与评估
+  </p>
+</div>
+
+</div><!-- end CN section -->
+
+</div><!-- end wrap -->
+
+<script>
+function sw(t){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  const map={llm:['t-llm','s-llm'],ag:['t-ag','s-ag'],cn:['t-cn','s-cn']};
+  document.querySelector('.'+map[t][0]).classList.add('active');
+  document.getElementById(map[t][1]).classList.add('active');
+  window.scrollTo({top:document.querySelector('.wrap').offsetTop-20,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
