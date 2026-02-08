@@ -3,44 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LLM & AI Agent 学习路线图</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<title>LLM & AI Agent 学习路线图 V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #0a0a0f;
-  --surface: #12121a;
-  --surface2: #1a1a26;
-  --border: #2a2a3a;
-  --text: #e8e6f0;
-  --text-dim: #8888aa;
-  --accent-llm: #6366f1;
-  --accent-llm-light: #818cf8;
-  --accent-agent: #f59e0b;
-  --accent-agent-light: #fbbf24;
-  --glow-llm: rgba(99, 102, 241, 0.15);
-  --glow-agent: rgba(245, 158, 11, 0.15);
+  --bg: #07070b;
+  --surface: #0e0e16;
+  --surface2: #15151f;
+  --surface3: #1c1c2a;
+  --border: #252538;
+  --border-hover: #3a3a55;
+  --text: #e4e2ee;
+  --text-dim: #7c7c9a;
+  --text-muted: #55556e;
+  --accent-llm: #7c6aef;
+  --accent-llm-light: #a594fd;
+  --accent-llm-glow: rgba(124, 106, 239, 0.12);
+  --accent-llm-glow2: rgba(124, 106, 239, 0.06);
+  --accent-agent: #e8943a;
+  --accent-agent-light: #f5b76b;
+  --accent-agent-glow: rgba(232, 148, 58, 0.12);
+  --accent-agent-glow2: rgba(232, 148, 58, 0.06);
+  --accent-fast: #34d399;
+  --accent-fast-light: #6ee7b7;
+  --accent-fast-glow: rgba(52, 211, 153, 0.12);
+  --radius: 14px;
+  --radius-sm: 8px;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Noto Sans SC', sans-serif;
-  line-height: 1.6;
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  line-height: 1.65;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Background grain */
+/* Noise overlay */
 body::before {
   content: '';
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
 }
 
+/* ─── HERO ─── */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -55,12 +67,12 @@ body::before {
 .hero::before {
   content: '';
   position: absolute;
-  top: -20%;
+  top: -30%;
   left: 50%;
   transform: translateX(-50%);
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, rgba(245,158,11,0.05) 40%, transparent 70%);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(ellipse, rgba(124,106,239,0.07) 0%, rgba(232,148,58,0.04) 45%, transparent 70%);
   pointer-events: none;
 }
 
@@ -68,57 +80,80 @@ body::before {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 16px;
+  padding: 6px 18px;
   border: 1px solid var(--border);
   border-radius: 100px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-dim);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-family: 'Space Mono', monospace;
-  margin-bottom: 2rem;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 2.5rem;
+  background: var(--surface);
   animation: fadeInDown 0.8s ease;
 }
 
-.hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+.hero-badge .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 8px rgba(34,197,94,0.5);
+}
 
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 900;
-  line-height: 1.1;
+h1.hero-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.08;
   margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
   animation: fadeInUp 0.8s ease;
 }
 
-h1 .llm-text { background: linear-gradient(135deg, var(--accent-llm), var(--accent-llm-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--accent-agent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-.hero-sub {
-  font-size: 1.15rem;
-  color: var(--text-dim);
-  max-width: 600px;
-  margin-bottom: 3rem;
-  animation: fadeInUp 0.8s 0.2s ease both;
+h1 .llm-text {
+  background: linear-gradient(135deg, var(--accent-llm), var(--accent-llm-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
 }
 
+h1 .agent-text {
+  background: linear-gradient(135deg, var(--accent-agent), var(--accent-agent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  max-width: 640px;
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.8s 0.15s ease both;
+  line-height: 1.8;
+}
+
+/* Tabs */
 .tab-container {
   display: flex;
-  gap: 1rem;
-  animation: fadeInUp 0.8s 0.4s ease both;
+  gap: 12px;
+  animation: fadeInUp 0.8s 0.3s ease both;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .tab-btn {
-  padding: 14px 32px;
-  border: 2px solid var(--border);
-  border-radius: 12px;
-  background: transparent;
+  padding: 13px 28px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
   color: var(--text);
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-family: 'Noto Sans SC', sans-serif;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
 }
@@ -126,56 +161,103 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
 .tab-btn::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.25s;
 }
 
-.tab-btn.llm-btn::before { background: var(--glow-llm); }
-.tab-btn.agent-btn::before { background: var(--glow-agent); }
+.tab-btn.llm-btn::before { background: var(--accent-llm-glow); }
+.tab-btn.agent-btn::before { background: var(--accent-agent-glow); }
+.tab-btn.fast-btn::before { background: var(--accent-fast-glow); }
 
 .tab-btn:hover::before, .tab-btn.active::before { opacity: 1; }
+.tab-btn:hover { border-color: var(--border-hover); }
 .tab-btn.llm-btn.active { border-color: var(--accent-llm); color: var(--accent-llm-light); }
 .tab-btn.agent-btn.active { border-color: var(--accent-agent); color: var(--accent-agent-light); }
+.tab-btn.fast-btn.active { border-color: var(--accent-fast); color: var(--accent-fast-light); }
 
 .scroll-hint {
   position: absolute;
   bottom: 2rem;
-  animation: bounce 2s infinite, fadeIn 1s 1s ease both;
-  color: var(--text-dim);
-  font-size: 0.85rem;
+  animation: bounce 2s infinite, fadeIn 1s 1.2s ease both;
+  color: var(--text-muted);
+  font-size: 0.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
 }
 
-.scroll-hint svg { width: 20px; height: 20px; stroke: var(--text-dim); }
+.scroll-hint svg { width: 18px; height: 18px; stroke: var(--text-muted); }
 
-/* Main content */
-.content { max-width: 900px; margin: 0 auto; padding: 0 2rem 6rem; position: relative; z-index: 1; }
+/* ─── CONTENT ─── */
+.content {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 2rem 8rem;
+  position: relative;
+  z-index: 1;
+}
 
 .roadmap-section { display: none; }
 .roadmap-section.active { display: block; }
 
-/* Timeline */
-.timeline { position: relative; padding-left: 40px; }
+/* Summary stats */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 3.5rem;
+}
+
+.summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.summary-card .number {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2.6rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.summary-card .label {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  margin-top: 2px;
+}
+
+/* ─── TIMELINE ─── */
+.timeline { position: relative; padding-left: 44px; }
 
 .timeline::before {
   content: '';
   position: absolute;
-  left: 14px;
+  left: 15px;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: 1.5px;
 }
 
-.timeline.llm-timeline::before { background: linear-gradient(to bottom, var(--accent-llm), transparent); }
-.timeline.agent-timeline::before { background: linear-gradient(to bottom, var(--accent-agent), transparent); }
+.timeline.llm-timeline::before {
+  background: linear-gradient(to bottom, var(--accent-llm) 0%, rgba(124,106,239,0.15) 80%, transparent 100%);
+}
+.timeline.agent-timeline::before {
+  background: linear-gradient(to bottom, var(--accent-agent) 0%, rgba(232,148,58,0.15) 80%, transparent 100%);
+}
+.timeline.fast-timeline::before {
+  background: linear-gradient(to bottom, var(--accent-fast) 0%, rgba(52,211,153,0.15) 80%, transparent 100%);
+}
 
 .phase {
   position: relative;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -185,20 +267,22 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
 
 .phase-dot {
   position: absolute;
-  left: -33px;
-  top: 8px;
-  width: 16px;
-  height: 16px;
+  left: -36px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  border: 3px solid;
+  border: 2.5px solid;
+  background: var(--bg);
 }
 
-.llm-timeline .phase-dot { border-color: var(--accent-llm); background: var(--bg); box-shadow: 0 0 12px var(--glow-llm); }
-.agent-timeline .phase-dot { border-color: var(--accent-agent); background: var(--bg); box-shadow: 0 0 12px var(--glow-agent); }
+.llm-timeline .phase-dot { border-color: var(--accent-llm); box-shadow: 0 0 16px var(--accent-llm-glow); }
+.agent-timeline .phase-dot { border-color: var(--accent-agent); box-shadow: 0 0 16px var(--accent-agent-glow); }
+.fast-timeline .phase-dot { border-color: var(--accent-fast); box-shadow: 0 0 16px var(--accent-fast-glow); }
 
 .phase-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
@@ -206,34 +290,38 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
 
 .llm-timeline .phase-label { color: var(--accent-llm-light); }
 .agent-timeline .phase-label { color: var(--accent-agent-light); }
+.fast-timeline .phase-label { color: var(--accent-fast-light); }
 
 .phase-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.65rem;
+  font-weight: 400;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
 }
 
 .phase-desc {
   color: var(--text-dim);
-  font-size: 0.95rem;
-  margin-bottom: 1.25rem;
-  line-height: 1.7;
+  font-size: 0.92rem;
+  margin-bottom: 1.4rem;
+  line-height: 1.75;
 }
 
-.cards { display: grid; grid-template-columns: 1fr; gap: 12px; }
+/* ─── CARDS ─── */
+.cards { display: grid; grid-template-columns: 1fr; gap: 10px; }
 
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.25rem;
-  transition: all 0.3s ease;
+  border-radius: var(--radius);
+  padding: 1.2rem 1.3rem;
+  transition: all 0.25s ease;
   cursor: default;
 }
 
 .card:hover {
-  border-color: #3a3a50;
-  transform: translateX(4px);
+  border-color: var(--border-hover);
+  transform: translateX(3px);
   background: var(--surface2);
 }
 
@@ -241,222 +329,295 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.45rem;
 }
 
 .card-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 0.95rem;
   flex-shrink: 0;
 }
 
-.llm-timeline .card-icon { background: var(--glow-llm); color: var(--accent-llm-light); }
-.agent-timeline .card-icon { background: var(--glow-agent); color: var(--accent-agent-light); }
+.llm-timeline .card-icon { background: var(--accent-llm-glow); }
+.agent-timeline .card-icon { background: var(--accent-agent-glow); }
+.fast-timeline .card-icon { background: var(--accent-fast-glow); }
 
-.card-title { font-weight: 600; font-size: 0.95rem; }
+.card-title { font-weight: 600; font-size: 0.92rem; }
 
-.card-body { color: var(--text-dim); font-size: 0.85rem; line-height: 1.7; padding-left: 42px; }
-
-.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.75rem; padding-left: 42px; }
-
-.tag {
-  padding: 3px 10px;
-  border-radius: 6px;
-  font-size: 0.72rem;
-  font-family: 'Space Mono', monospace;
-  border: 1px solid var(--border);
+.card-body {
   color: var(--text-dim);
+  font-size: 0.84rem;
+  line-height: 1.75;
+  padding-left: 40px;
 }
 
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 0.65rem;
+  padding-left: 40px;
+}
+
+.tag {
+  padding: 2px 9px;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  transition: border-color 0.2s;
+}
+
+.tag:hover { border-color: var(--border-hover); }
+
+.tag.tag-new {
+  border-color: rgba(52,211,153,0.4);
+  color: var(--accent-fast-light);
+  background: rgba(52,211,153,0.06);
+}
+
+/* Project card variant */
+.card.project-card {
+  border-style: dashed;
+  background: var(--surface2);
+}
+
+.card.project-card:hover { background: var(--surface3); }
+
+/* Resources */
 .resources-block {
   margin-top: 1rem;
-  padding: 1rem 1.25rem;
-  background: rgba(255,255,255,0.02);
-  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  background: rgba(255,255,255,0.015);
+  border-radius: var(--radius);
   border: 1px dashed var(--border);
 }
 
 .resources-block h4 {
-  font-size: 0.8rem;
-  font-family: 'Space Mono', monospace;
-  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 0.6rem;
-  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
 }
 
 .resource-item {
-  font-size: 0.83rem;
-  color: var(--text);
-  padding: 4px 0;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  padding: 3px 0;
   display: flex;
   align-items: flex-start;
   gap: 8px;
+  line-height: 1.6;
 }
 
-.resource-item::before { content: '→'; color: var(--text-dim); flex-shrink: 0; }
-
-.resource-item a {
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 1px solid var(--border);
-  transition: border-color 0.2s;
+.resource-item::before {
+  content: '→';
+  color: var(--text-muted);
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  margin-top: 1px;
 }
 
-.resource-item a:hover { border-color: var(--text); }
-
-/* Section divider */
-.section-divider {
-  text-align: center;
-  padding: 3rem 0;
+/* Fast-track callout */
+.fast-track-callout {
+  background: linear-gradient(135deg, rgba(52,211,153,0.06), rgba(52,211,153,0.02));
+  border: 1px solid rgba(52,211,153,0.2);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 3.5rem;
   position: relative;
+  overflow: hidden;
 }
 
-.section-divider::before {
+.fast-track-callout::before {
   content: '';
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 200px;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--border), transparent);
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--accent-fast);
 }
 
-/* Summary section */
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
+.fast-track-callout h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--accent-fast-light);
+  margin-bottom: 0.5rem;
 }
 
-.summary-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
+.fast-track-callout p {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+
+.fast-track-callout .steps {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fast-track-callout .step-tag {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(52,211,153,0.1);
+  color: var(--accent-fast-light);
+  border: 1px solid rgba(52,211,153,0.2);
+}
+
+.fast-track-callout .step-arrow {
+  display: flex;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* Footer */
+.footer-note {
   text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  border-top: 1px solid var(--border);
+  max-width: 920px;
+  margin: 0 auto;
 }
 
-.summary-card .number {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
-  font-weight: 900;
-}
-
-.llm-timeline .summary-card .number { color: var(--accent-llm-light); }
-.agent-timeline .summary-card .number { color: var(--accent-agent-light); }
-
-.summary-card .label { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
-
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+/* Animations */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } 60% { transform: translateY(-3px); } }
 
+/* Responsive */
 @media (max-width: 640px) {
-  .tab-container { flex-direction: column; width: 100%; }
+  .tab-container { flex-direction: column; width: 100%; max-width: 320px; }
   .tab-btn { width: 100%; }
   .timeline { padding-left: 30px; }
-  .phase-dot { left: -23px; width: 12px; height: 12px; }
+  .phase-dot { left: -22px; width: 11px; height: 11px; }
   .card-body, .card-tags { padding-left: 0; }
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  h1.hero-title { font-size: clamp(2rem, 8vw, 3.5rem); }
 }
 </style>
 </head>
 <body>
 
+<!-- ════════════════════ HERO ════════════════════ -->
 <section class="hero">
-  <div class="hero-badge"><span class="dot"></span> 2025-2026 最新版</div>
-  <h1><span class="llm-text">LLM</span> & <span class="agent-text">AI Agent</span><br>从入门到精通</h1>
-  <p class="hero-sub">一份结构化的学习路线图，涵盖大语言模型基础、RAG、微调、Agent 框架、多智能体系统等核心技能</p>
+  <div class="hero-badge"><span class="dot"></span> 2025 升级版 · V2</div>
+  <h1 class="hero-title"><span class="llm-text">LLM</span> & <span class="agent-text">AI Agent</span><br>从入门到精通</h1>
+  <p class="hero-sub">一份结构化的学习路线图，涵盖大语言模型基础、RAG、微调、Agent 框架、多智能体系统等核心技能。新增快速通道、实战项目与 2025 前沿技术。</p>
   <div class="tab-container">
     <button class="tab-btn llm-btn active" onclick="switchTab('llm')">🧠 LLM 学习路线</button>
-    <button class="tab-btn agent-btn" onclick="switchTab('agent')">🤖 AI Agent 学习路线</button>
+    <button class="tab-btn agent-btn" onclick="switchTab('agent')">🤖 AI Agent 路线</button>
+    <button class="tab-btn fast-btn" onclick="switchTab('fast')">⚡ 应用快速通道</button>
   </div>
   <div class="scroll-hint">
-    向下滚动
+    scroll
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
   </div>
 </section>
 
 <div class="content">
 
-<!-- ==================== LLM ROADMAP ==================== -->
+<!-- ══════════════════════════════════════════════════
+     LLM ROADMAP
+     ══════════════════════════════════════════════════ -->
 <div id="llm-section" class="roadmap-section active">
 
-<div class="summary-grid" style="margin-bottom:3rem;">
+<div class="summary-grid">
   <div class="summary-card"><div class="number" style="color:var(--accent-llm-light)">6</div><div class="label">学习阶段</div></div>
-  <div class="summary-card"><div class="number" style="color:var(--accent-llm-light)">~6月</div><div class="label">建议学习周期</div></div>
-  <div class="summary-card"><div class="number" style="color:var(--accent-llm-light)">20+</div><div class="label">核心技能点</div></div>
+  <div class="summary-card"><div class="number" style="color:var(--accent-llm-light)">~6 月</div><div class="label">建议周期</div></div>
+  <div class="summary-card"><div class="number" style="color:var(--accent-llm-light)">24+</div><div class="label">核心技能点</div></div>
+  <div class="summary-card"><div class="number" style="color:var(--accent-llm-light)">12</div><div class="label">实战项目</div></div>
 </div>
 
 <div class="timeline llm-timeline">
 
-<!-- Phase 1 -->
+<!-- ─── Phase 1 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
   <div class="phase-label">Phase 01 · 基础筑基</div>
   <div class="phase-title">数学 & 编程基础</div>
-  <div class="phase-desc">打好地基。掌握深度学习必需的数学基础和 Python 编程能力。这些是理解一切后续内容的前提。</div>
+  <div class="phase-desc">打好地基。掌握深度学习所需的数学直觉和 Python 工程能力。这些是理解一切后续内容的前提。</div>
   <div class="cards">
     <div class="card">
       <div class="card-head"><div class="card-icon">📐</div><div class="card-title">核心数学</div></div>
-      <div class="card-body">线性代数（向量、矩阵乘法、特征值分解）、概率统计（分布、MLE、贝叶斯）、微积分（梯度、反向传播）、优化方法（SGD、Adam）</div>
+      <div class="card-body">线性代数（向量、矩阵乘法、特征值分解）、概率统计（分布、MLE、贝叶斯推断）、微积分（梯度、链式法则、反向传播）、优化方法（SGD、Adam、学习率调度）</div>
       <div class="card-tags"><span class="tag">3Blue1Brown</span><span class="tag">Khan Academy</span><span class="tag">MIT OCW 18.06</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🐍</div><div class="card-title">Python & 深度学习框架</div></div>
-      <div class="card-body">Python 高级特性、NumPy / Pandas 数据处理、PyTorch（推荐）或 TensorFlow 框架、模型训练与调试基础</div>
+      <div class="card-body">Python 高级特性（装饰器、生成器、类型注解）、NumPy / Pandas 数据处理、PyTorch（推荐）或 JAX、模型训练与调试基础</div>
       <div class="card-tags"><span class="tag">PyTorch</span><span class="tag">freeCodeCamp</span><span class="tag">Real Python</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🗣️</div><div class="card-title">NLP 基础</div></div>
-      <div class="card-body">文本预处理、词嵌入（Word2Vec、GloVe）、RNN/LSTM 基本原理、序列到序列模型</div>
+      <div class="card-body">文本预处理与表示、词嵌入（Word2Vec、GloVe、FastText）、RNN / LSTM 基本原理、序列到序列模型</div>
       <div class="card-tags"><span class="tag">spaCy</span><span class="tag">NLTK</span><span class="tag">Jay Alammar Blog</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">动手项目</div></div>
+      <div class="card-body">① 用 NumPy 从零实现一个简单神经网络 ② 用 PyTorch 训练一个情感分类器（IMDB 数据集）</div>
+      <div class="card-tags"><span class="tag">Hands-on</span></div>
     </div>
   </div>
   <div class="resources-block">
     <h4>推荐资源</h4>
-    <div class="resource-item">Andrej Karpathy — Neural Networks: Zero to Hero (YouTube 系列)</div>
+    <div class="resource-item">Andrej Karpathy — Neural Networks: Zero to Hero（YouTube 系列）</div>
     <div class="resource-item">3Blue1Brown — 线性代数的本质 / 深度学习系列</div>
     <div class="resource-item">李宏毅机器学习课程（中文，NTU）</div>
     <div class="resource-item">fast.ai — Practical Deep Learning for Coders</div>
   </div>
 </div>
 
-<!-- Phase 2 -->
+<!-- ─── Phase 2 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
   <div class="phase-label">Phase 02 · 核心架构</div>
   <div class="phase-title">Transformer & LLM 原理</div>
-  <div class="phase-desc">深入理解驱动现代 AI 的核心架构。从 Attention 机制到 GPT 系列，建立对大模型的直觉理解。</div>
+  <div class="phase-desc">深入理解驱动现代 AI 的核心架构。从 Self-Attention 到 GPT 系列再到最新的开源模型，建立对大模型的系统理解。</div>
   <div class="cards">
     <div class="card">
       <div class="card-head"><div class="card-icon">⚡</div><div class="card-title">Transformer 架构</div></div>
-      <div class="card-body">Self-Attention 机制、Multi-Head Attention、位置编码（RoPE、ALiBi）、Layer Normalization、残差连接、Encoder-Decoder 结构</div>
+      <div class="card-body">Self-Attention 机制、Multi-Head Attention、位置编码（Sinusoidal、RoPE、ALiBi）、Layer Normalization（Pre-LN vs Post-LN）、残差连接、Encoder-Decoder vs Decoder-Only</div>
       <div class="card-tags"><span class="tag">Attention Is All You Need</span><span class="tag">The Illustrated Transformer</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🔤</div><div class="card-title">Tokenization</div></div>
-      <div class="card-body">BPE、WordPiece、SentencePiece 算法原理、不同分词策略对模型性能的影响、多语言 Tokenization 的挑战</div>
+      <div class="card-body">BPE、WordPiece、SentencePiece 算法原理、不同分词策略对模型性能的影响、多语言 Tokenization 的挑战与解决方案</div>
       <div class="card-tags"><span class="tag">Karpathy Tokenizer 教程</span><span class="tag">HuggingFace Tokenizers</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🏗️</div><div class="card-title">主流模型架构</div></div>
-      <div class="card-body">GPT 系列（decoder-only）、BERT / T5（encoder / encoder-decoder）、LLaMA / Mistral / Qwen 开源架构、MoE 混合专家模型</div>
-      <div class="card-tags"><span class="tag">GPT-2/3 论文</span><span class="tag">LLaMA 论文</span><span class="tag">Mistral 论文</span></div>
+      <div class="card-body">GPT 系列（Decoder-Only）、BERT / T5（Encoder / Encoder-Decoder）、LLaMA 3 / Mistral / Qwen 2.5 开源架构、MoE 混合专家模型（Mixtral、DeepSeek-V3）</div>
+      <div class="card-tags"><span class="tag">GPT 论文</span><span class="tag">LLaMA 3 论文</span><span class="tag tag-new">DeepSeek-V3</span><span class="tag tag-new">Qwen 2.5</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🎲</div><div class="card-title">生成与解码策略</div></div>
-      <div class="card-body">Greedy Search、Beam Search、Temperature Sampling、Top-k / Top-p (Nucleus) Sampling、Repetition Penalty</div>
-      <div class="card-tags"><span class="tag">Hugging Face Blog</span></div>
+      <div class="card-body">Greedy / Beam Search、Temperature Sampling、Top-k / Top-p (Nucleus) Sampling、Repetition Penalty、Structured Output（JSON Mode、Constrained Decoding）</div>
+      <div class="card-tags"><span class="tag">Hugging Face Blog</span><span class="tag tag-new">Structured Output</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">动手项目</div></div>
+      <div class="card-body">① 从零用 PyTorch 实现一个 mini-GPT（nanoGPT）② 使用 HuggingFace Transformers 做文本生成，对比不同解码策略</div>
+      <div class="card-tags"><span class="tag">Hands-on</span><span class="tag">nanoGPT</span></div>
     </div>
   </div>
   <div class="resources-block">
@@ -470,7 +631,7 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
   </div>
 </div>
 
-<!-- Phase 3 -->
+<!-- ─── Phase 3 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
   <div class="phase-label">Phase 03 · 训练与对齐</div>
@@ -479,23 +640,28 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
   <div class="cards">
     <div class="card">
       <div class="card-head"><div class="card-icon">📊</div><div class="card-title">数据工程</div></div>
-      <div class="card-body">训练数据收集与清洗、数据去重与质量过滤、合成数据生成（Distilabel）、Chat Template 设计</div>
-      <div class="card-tags"><span class="tag">NeMo-Curator</span><span class="tag">Argilla</span><span class="tag">Semhash</span></div>
+      <div class="card-body">训练数据收集与清洗、数据去重与质量过滤、合成数据生成（Distilabel、Magpie）、Chat Template 设计</div>
+      <div class="card-tags"><span class="tag">NeMo-Curator</span><span class="tag">Argilla</span><span class="tag tag-new">Magpie</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🔧</div><div class="card-title">微调技术</div></div>
-      <div class="card-body">Full Fine-tuning、LoRA / QLoRA（参数高效微调）、SFT 指令微调、Instruction Dataset 构建、Unsloth / PEFT 工具链</div>
-      <div class="card-tags"><span class="tag">LoRA 论文</span><span class="tag">Hugging Face PEFT</span><span class="tag">Unsloth</span></div>
+      <div class="card-body">Full Fine-tuning、LoRA / QLoRA（参数高效微调）、SFT 指令微调、Instruction Dataset 构建、Unsloth / PEFT / Axolotl 工具链</div>
+      <div class="card-tags"><span class="tag">LoRA 论文</span><span class="tag">HF PEFT</span><span class="tag tag-new">Unsloth</span><span class="tag tag-new">Axolotl</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🎯</div><div class="card-title">RLHF & 对齐</div></div>
-      <div class="card-body">Reward Model 训练、PPO / DPO / GRPO 算法、Constitutional AI 原理、安全对齐策略</div>
-      <div class="card-tags"><span class="tag">InstructGPT 论文</span><span class="tag">DPO 论文</span><span class="tag">DeepSeek-R1 技术报告</span></div>
+      <div class="card-body">Reward Model 训练、PPO / DPO / GRPO 算法、Constitutional AI 原理、安全对齐策略、DeepSeek-R1 强化学习训练范式</div>
+      <div class="card-tags"><span class="tag">InstructGPT</span><span class="tag">DPO</span><span class="tag tag-new">GRPO</span><span class="tag tag-new">DeepSeek-R1</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">📏</div><div class="card-title">模型评估</div></div>
-      <div class="card-body">基准测试（MMLU、HumanEval、MT-Bench）、LLM-as-Judge、开放式评估框架、幻觉检测与缓解</div>
-      <div class="card-tags"><span class="tag">lm-evaluation-harness</span><span class="tag">Open LLM Leaderboard</span></div>
+      <div class="card-body">基准测试（MMLU、HumanEval、MT-Bench、GPQA）、LLM-as-Judge、Chatbot Arena 排名、幻觉检测与缓解</div>
+      <div class="card-tags"><span class="tag">lm-eval-harness</span><span class="tag">Open LLM Leaderboard</span><span class="tag tag-new">Chatbot Arena</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">动手项目</div></div>
+      <div class="card-body">① 用 QLoRA 在自己的数据集上微调 Qwen / LLaMA ② 构建一个领域专用模型（如医疗问答、法律摘要）并做评估</div>
+      <div class="card-tags"><span class="tag">Hands-on</span></div>
     </div>
   </div>
   <div class="resources-block">
@@ -503,11 +669,12 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
     <div class="resource-item">Maxime Labonne — LLM Course（GitHub，含 Colab 实操）</div>
     <div class="resource-item">Hugging Face — TRL（Transformer Reinforcement Learning 库）</div>
     <div class="resource-item">Chip Huyen — RLHF: Reinforcement Learning from Human Feedback</div>
-    <div class="resource-item">DeepLearning.AI — Finetuning Large Language Models（Coursera）</div>
+    <div class="resource-item">DeepLearning.AI — Finetuning Large Language Models</div>
+    <div class="resource-item">DeepSeek-R1 技术报告（强化学习训练 LLM 推理能力）</div>
   </div>
 </div>
 
-<!-- Phase 4 -->
+<!-- ─── Phase 4 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
   <div class="phase-label">Phase 04 · 工程应用</div>
@@ -516,30 +683,36 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
   <div class="cards">
     <div class="card">
       <div class="card-head"><div class="card-icon">💬</div><div class="card-title">Prompt Engineering</div></div>
-      <div class="card-body">System Prompt 设计、Few-shot / Chain-of-Thought / Tree-of-Thought、结构化输出（JSON Mode）、Prompt 注入防御</div>
-      <div class="card-tags"><span class="tag">OpenAI Prompt Guide</span><span class="tag">Anthropic Prompt Guide</span></div>
+      <div class="card-body">System Prompt 设计、Few-shot / Chain-of-Thought / Tree-of-Thought、Structured Output（JSON Mode）、Prompt 注入防御、Prompt Caching</div>
+      <div class="card-tags"><span class="tag">OpenAI Guide</span><span class="tag">Anthropic Guide</span><span class="tag tag-new">Prompt Caching</span></div>
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-icon">🔍</div><div class="card-title">RAG（检索增强生成）</div></div>
-      <div class="card-body">向量数据库（Pinecone、Weaviate、Chroma、pgvector）、Embedding 模型选择、文档分块策略、Hybrid Search（向量+关键词）</div>
+      <div class="card-head"><div class="card-icon">🔍</div><div class="card-title">RAG 基础</div></div>
+      <div class="card-body">向量数据库（Pinecone、Weaviate、Chroma、pgvector）、Embedding 模型选择（OpenAI、Cohere、BGE）、文档分块策略（Recursive、Semantic）、Hybrid Search（向量 + 关键词 + Reranking）</div>
       <div class="card-tags"><span class="tag">LangChain</span><span class="tag">LlamaIndex</span><span class="tag">Pinecone</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🚀</div><div class="card-title">Advanced RAG</div></div>
-      <div class="card-body">Query Rewriting、Re-ranking、HyDE、Parent-Child Chunking、Knowledge Graph + RAG（HybridRAG）、Multi-modal RAG</div>
-      <div class="card-tags"><span class="tag">Advanced RAG 论文</span><span class="tag">Llamaindex</span></div>
+      <div class="card-body">Query Rewriting & Decomposition、Re-ranking（Cohere、Cross-Encoder）、HyDE、Parent-Child Chunking、Knowledge Graph + RAG（GraphRAG）、Multi-modal RAG（图文混合检索）</div>
+      <div class="card-tags"><span class="tag">GraphRAG</span><span class="tag tag-new">Agentic RAG</span><span class="tag tag-new">Contextual Retrieval</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">动手项目</div></div>
+      <div class="card-body">① 搭建企业知识库 RAG 系统（文档上传 → 检索 → 回答）② 实现 Agentic RAG（Agent 自主决定何时检索、如何改写查询）</div>
+      <div class="card-tags"><span class="tag">Hands-on</span></div>
     </div>
   </div>
   <div class="resources-block">
     <h4>推荐资源</h4>
     <div class="resource-item">Anthropic — Prompt Engineering 官方文档</div>
     <div class="resource-item">DeepLearning.AI — Building and Evaluating Advanced RAG</div>
-    <div class="resource-item">LangChain Crash Course（YouTube）</div>
-    <div class="resource-item">LlamaIndex 官方文档与教程</div>
+    <div class="resource-item">LangChain / LlamaIndex 官方文档与教程</div>
+    <div class="resource-item">Anthropic — Contextual Retrieval（官方博客）</div>
+    <div class="resource-item">Microsoft — GraphRAG 开源项目</div>
   </div>
 </div>
 
-<!-- Phase 5 -->
+<!-- ─── Phase 5 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
   <div class="phase-label">Phase 05 · 部署优化</div>
@@ -548,30 +721,35 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
   <div class="cards">
     <div class="card">
       <div class="card-head"><div class="card-icon">⚙️</div><div class="card-title">模型量化与压缩</div></div>
-      <div class="card-body">GPTQ、AWQ、GGUF 量化格式、知识蒸馏、模型剪枝、Flash Attention、KV Cache 优化</div>
-      <div class="card-tags"><span class="tag">llama.cpp</span><span class="tag">GPTQ</span><span class="tag">AWQ</span></div>
+      <div class="card-body">GPTQ、AWQ、GGUF 量化格式、知识蒸馏、模型剪枝、Flash Attention 2/3、KV Cache 优化、PagedAttention</div>
+      <div class="card-tags"><span class="tag">llama.cpp</span><span class="tag">GPTQ</span><span class="tag">AWQ</span><span class="tag tag-new">Flash Attention 3</span></div>
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-icon">🖥️</div><div class="card-title">推理与服务</div></div>
-      <div class="card-body">vLLM、TGI（Text Generation Inference）、TensorRT-LLM、Ollama 本地部署、Speculative Decoding</div>
-      <div class="card-tags"><span class="tag">vLLM</span><span class="tag">Ollama</span><span class="tag">TGI</span></div>
+      <div class="card-head"><div class="card-icon">🖥️</div><div class="card-title">推理引擎与服务</div></div>
+      <div class="card-body">vLLM、SGLang、TGI（Text Generation Inference）、TensorRT-LLM、Ollama 本地部署、Speculative Decoding</div>
+      <div class="card-tags"><span class="tag">vLLM</span><span class="tag">Ollama</span><span class="tag tag-new">SGLang</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">📦</div><div class="card-title">LLMOps 生产实践</div></div>
-      <div class="card-body">监控与可观测性、A/B 测试、成本优化、Guardrails 安全护栏、日志与追踪（LangSmith、Langfuse）</div>
-      <div class="card-tags"><span class="tag">LangSmith</span><span class="tag">Langfuse</span><span class="tag">Weights & Biases</span></div>
+      <div class="card-body">监控与可观测性（Tracing、Logging）、A/B 测试与 Eval-Driven 迭代、成本优化（模型路由、Caching）、Guardrails 安全护栏、LangSmith / Langfuse / Braintrust</div>
+      <div class="card-tags"><span class="tag">LangSmith</span><span class="tag">Langfuse</span><span class="tag tag-new">Braintrust</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">动手项目</div></div>
+      <div class="card-body">① 用 vLLM / Ollama 部署开源模型并做压力测试 ② 搭建一个带 Guardrails + Tracing 的完整 LLM 服务</div>
+      <div class="card-tags"><span class="tag">Hands-on</span></div>
     </div>
   </div>
   <div class="resources-block">
     <h4>推荐资源</h4>
     <div class="resource-item">Maxime Labonne —《The LLM Engineer's Handbook》</div>
-    <div class="resource-item">vLLM 官方文档与基准测试</div>
+    <div class="resource-item">vLLM / SGLang 官方文档与基准测试</div>
     <div class="resource-item">Ollama — 本地运行 LLM 工具</div>
-    <div class="resource-item">Chip Huyen —《Designing Machine Learning Systems》</div>
+    <div class="resource-item">Chip Huyen —《AI Engineering》（2025 新书）</div>
   </div>
 </div>
 
-<!-- Phase 6 -->
+<!-- ─── Phase 6 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
   <div class="phase-label">Phase 06 · 前沿探索</div>
@@ -580,72 +758,81 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
   <div class="cards">
     <div class="card">
       <div class="card-head"><div class="card-icon">👁️</div><div class="card-title">Vision Language Models</div></div>
-      <div class="card-body">CLIP、LLaVA、GPT-4V 架构原理、视觉编码器与语言模型的融合方式、多模态微调</div>
-      <div class="card-tags"><span class="tag">CLIP</span><span class="tag">LLaVA</span><span class="tag">Qwen-VL</span></div>
+      <div class="card-body">CLIP、LLaVA、GPT-4o、Claude Vision 架构原理、视觉编码器与语言模型的融合、多模态微调（图文、视频理解）</div>
+      <div class="card-tags"><span class="tag">CLIP</span><span class="tag">LLaVA</span><span class="tag tag-new">Qwen-VL 2.5</span><span class="tag tag-new">GPT-4o</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🔊</div><div class="card-title">语音与实时交互</div></div>
+      <div class="card-body">Speech-to-Speech 模型、Voice Agent 架构（Whisper + LLM + TTS）、实时语音 API（OpenAI Realtime API）、音频理解与生成</div>
+      <div class="card-tags"><span class="tag tag-new">Voice Agent</span><span class="tag tag-new">Realtime API</span><span class="tag">Whisper</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🧪</div><div class="card-title">前沿研究方向</div></div>
-      <div class="card-body">长上下文扩展（100K+ tokens）、推理能力增强（o1/o3 style reasoning）、MCP 协议、World Models、小模型效率优化</div>
-      <div class="card-tags"><span class="tag">arXiv</span><span class="tag">Papers With Code</span><span class="tag">Hugging Face Daily Papers</span></div>
+      <div class="card-body">长上下文扩展（1M+ tokens）、推理增强（o1/o3/DeepSeek-R1 式深度推理）、Test-Time Compute Scaling、小模型效率优化（SLM）、World Models</div>
+      <div class="card-tags"><span class="tag tag-new">Test-Time Scaling</span><span class="tag tag-new">DeepSeek-R1</span><span class="tag">arXiv</span></div>
     </div>
   </div>
   <div class="resources-block">
     <h4>持续学习渠道</h4>
     <div class="resource-item">arXiv 每日 cs.CL / cs.AI 论文</div>
     <div class="resource-item">Hugging Face Daily Papers</div>
-    <div class="resource-item">Twitter/X：@kaboroné、@ylecun、@AndrewYNg</div>
-    <div class="resource-item">Newsletter：The Batch (Andrew Ng)、Ahead of AI (Sebastian Raschka)</div>
+    <div class="resource-item">Twitter/X: @karpathy、@ylecun、@AndrewYNg、@ababoroné</div>
+    <div class="resource-item">Newsletter: The Batch (Andrew Ng)、Ahead of AI (Sebastian Raschka)、Interconnects (Nathan Lambert)</div>
+    <div class="resource-item">Latent Space Podcast</div>
   </div>
 </div>
 
-</div><!-- end timeline -->
+</div><!-- end llm-timeline -->
 </div><!-- end llm-section -->
 
 
-<!-- ==================== AI AGENT ROADMAP ==================== -->
+<!-- ══════════════════════════════════════════════════
+     AI AGENT ROADMAP
+     ══════════════════════════════════════════════════ -->
 <div id="agent-section" class="roadmap-section">
 
-<div class="summary-grid" style="margin-bottom:3rem;">
-  <div class="summary-card"><div class="number" style="color:var(--accent-agent-light)">6</div><div class="label">学习阶段</div></div>
-  <div class="summary-card"><div class="number" style="color:var(--accent-agent-light)">~6月</div><div class="label">建议学习周期</div></div>
-  <div class="summary-card"><div class="number" style="color:var(--accent-agent-light)">25+</div><div class="label">核心技能点</div></div>
+<div class="summary-grid">
+  <div class="summary-card"><div class="number" style="color:var(--accent-agent-light)">7</div><div class="label">学习阶段</div></div>
+  <div class="summary-card"><div class="number" style="color:var(--accent-agent-light)">~6 月</div><div class="label">建议周期</div></div>
+  <div class="summary-card"><div class="number" style="color:var(--accent-agent-light)">30+</div><div class="label">核心技能点</div></div>
+  <div class="summary-card"><div class="number" style="color:var(--accent-agent-light)">10</div><div class="label">实战项目</div></div>
 </div>
 
 <div class="timeline agent-timeline">
 
-<!-- Phase 1 -->
+<!-- ─── Phase 1 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
   <div class="phase-label">Phase 01 · 概念基础</div>
   <div class="phase-title">理解 AI Agent 与 Agentic AI</div>
-  <div class="phase-desc">从 ReAct 到 Tool Use，理解什么让 AI 从"被动回复"变成"主动执行"。</div>
+  <div class="phase-desc">从 ReAct 到 Tool Use，理解什么让 AI 从「被动回复」变成「主动执行」。建立 Agent 思维模型。</div>
   <div class="cards">
     <div class="card">
       <div class="card-head"><div class="card-icon">🤖</div><div class="card-title">Agent 核心概念</div></div>
-      <div class="card-body">什么是 AI Agent vs 传统 AI、感知-推理-行动循环、Goal-oriented vs Task-oriented Agent、Agent 自主性等级</div>
-      <div class="card-tags"><span class="tag">ReAct 论文</span><span class="tag">Andrew Ng Agent 讲座</span></div>
+      <div class="card-body">AI Agent vs 传统 AI 应用的本质区别、感知-推理-行动循环、Goal-oriented vs Task-oriented Agent、Agent 自主性等级（L1-L5）</div>
+      <div class="card-tags"><span class="tag">ReAct 论文</span><span class="tag">Andrew Ng 讲座</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🧩</div><div class="card-title">Agent 核心组件</div></div>
-      <div class="card-body">LLM 作为"大脑"、Planning（计划模块）、Memory（短期/长期记忆）、Tool Use（工具调用）、Observation（环境反馈）</div>
-      <div class="card-tags"><span class="tag">Lilian Weng Agent 博客</span></div>
+      <div class="card-body">LLM 作为「大脑」、Planning（计划模块）、Memory（短期 / 长期记忆）、Tool Use（工具调用）、Observation（环境反馈）、Orchestration（编排层）</div>
+      <div class="card-tags"><span class="tag">Lilian Weng 博客</span><span class="tag tag-new">Anthropic Agent 博客</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">📚</div><div class="card-title">前置知识</div></div>
-      <div class="card-body">LLM 基础（Transformer、Prompt Engineering、API 调用）、Python 异步编程、JSON/API 基本概念——建议先完成 LLM 路线 Phase 1-4</div>
-      <div class="card-tags"><span class="tag">Python asyncio</span><span class="tag">OpenAI API</span></div>
+      <div class="card-body">LLM 基础（Transformer、Prompt Engineering、API 调用）、Python 异步编程（asyncio）、JSON Schema / API 设计——建议先完成 LLM 路线 Phase 1-4 或快速通道</div>
+      <div class="card-tags"><span class="tag">Python asyncio</span><span class="tag">OpenAI API</span><span class="tag">Anthropic API</span></div>
     </div>
   </div>
   <div class="resources-block">
     <h4>推荐资源</h4>
-    <div class="resource-item">Lilian Weng — LLM Powered Autonomous Agents（经典博客文章）</div>
+    <div class="resource-item">Lilian Weng — LLM Powered Autonomous Agents（经典博客）</div>
     <div class="resource-item">Andrew Ng — Agentic AI Design Patterns（讲座系列）</div>
+    <div class="resource-item">Anthropic — Building Effective Agents（官方博客，2024.12）</div>
     <div class="resource-item">Harrison Chase（LangChain 创始人）— Agent 系列讲座</div>
-    <div class="resource-item">Anthropic — Building Effective Agents（官方博客）</div>
   </div>
 </div>
 
-<!-- Phase 2 -->
+<!-- ─── Phase 2 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
   <div class="phase-label">Phase 02 · 单 Agent 实战</div>
@@ -654,185 +841,392 @@ h1 .agent-text { background: linear-gradient(135deg, var(--accent-agent), var(--
   <div class="cards">
     <div class="card">
       <div class="card-head"><div class="card-icon">🔌</div><div class="card-title">Function Calling & Tool Use</div></div>
-      <div class="card-body">OpenAI / Anthropic Function Calling API、工具定义与注册、参数校验、结果解析、工具链编排</div>
-      <div class="card-tags"><span class="tag">OpenAI Tools API</span><span class="tag">Anthropic Tool Use</span></div>
+      <div class="card-body">OpenAI / Anthropic / Google Function Calling API、工具定义与 JSON Schema、参数校验与错误处理、结果解析与工具链编排</div>
+      <div class="card-tags"><span class="tag">OpenAI Tools</span><span class="tag">Anthropic Tool Use</span><span class="tag tag-new">Google ADK</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🔗</div><div class="card-title">Agent 框架入门</div></div>
-      <div class="card-body">LangChain Agents、LangGraph（状态机 Agent）、OpenAI Agents SDK、Anthropic Claude Agent（MCP）</div>
-      <div class="card-tags"><span class="tag">LangChain</span><span class="tag">LangGraph</span><span class="tag">OpenAI SDK</span></div>
+      <div class="card-body">LangGraph（状态机 Agent，推荐）、OpenAI Agents SDK、Anthropic Claude Code / Agent SDK、Agno / Pydantic AI / Smolagents</div>
+      <div class="card-tags"><span class="tag">LangGraph</span><span class="tag tag-new">OpenAI Agents SDK</span><span class="tag tag-new">Pydantic AI</span><span class="tag tag-new">Smolagents</span></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-icon">🧠</div><div class="card-title">记忆系统</div></div>
-      <div class="card-body">对话历史管理、短期记忆（Context Window）、长期记忆（向量存储）、Episodic Memory、记忆检索策略</div>
-      <div class="card-tags"><span class="tag">Mem0</span><span class="tag">LangChain Memory</span></div>
+      <div class="card-body">对话历史管理（Sliding Window、Summarization）、短期记忆（Context Window）、长期记忆（向量存储）、Episodic / Semantic Memory、记忆检索与更新策略</div>
+      <div class="card-tags"><span class="tag">Mem0</span><span class="tag">LangGraph Memory</span><span class="tag tag-new">Zep</span></div>
     </div>
-    <div class="card">
+    <div class="card project-card">
       <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">实战项目</div></div>
-      <div class="card-body">搜索 Agent（Web Search + 信息汇总）、代码助手 Agent、个人知识库 Agent（RAG + Agent）、邮件自动回复 Agent</div>
+      <div class="card-body">① 搜索 Agent（Web Search + 信息汇总 + 结构化输出）② 个人知识库 Agent（RAG + Agent + Memory）③ 邮件自动处理 Agent</div>
       <div class="card-tags"><span class="tag">Hands-on</span></div>
     </div>
   </div>
   <div class="resources-block">
     <h4>推荐资源</h4>
-    <div class="resource-item">LangChain 官方文档 — Agents 章节</div>
     <div class="resource-item">LangGraph 官方教程与案例</div>
     <div class="resource-item">DeepLearning.AI — AI Agentic Design Patterns with AutoGen</div>
     <div class="resource-item">roadmap.sh/ai-agents — AI Agents Roadmap（互动路线图）</div>
+    <div class="resource-item">Pydantic AI / Smolagents 官方文档</div>
   </div>
 </div>
 
-<!-- Phase 3 -->
+<!-- ─── Phase 3 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
   <div class="phase-label">Phase 03 · Agent 设计模式</div>
   <div class="phase-title">推理、规划与自我反思</div>
-  <div class="phase-desc">掌握让 Agent 更智能的设计模式——从 ReAct 到 Reflection，从 Planning 到自适应。</div>
+  <div class="phase-desc">掌握让 Agent 更智能的设计模式——从 ReAct 到 Reflection，从 Planning 到自适应策略。</div>
   <div class="cards">
     <div class="card">
       <div class="card-head"><div class="card-icon">🔄</div><div class="card-title">核心设计模式</div></div>
-      <div class="card-body">ReAct（推理+行动）、Reflection（自我反思）、Planning（计划-执行）、Tool Use（工具选择与编排）</div>
-      <div class="card-tags"><span class="tag">ReAct 论文</span><span class="tag">Reflexion 论文</span></div>
+      <div class="card-body">ReAct（推理 + 行动）、Reflection（自我反思与修正）、Planning（计划-执行-验证）、Tool Use（智能工具选择与编排）</div>
+      <div class="card-tags"><span class="tag">ReAct</span><span class="tag">Reflexion</span><span class="tag tag-new">LATS</span></div>
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-icon">🌳</div><div class="card-title">高级推理链</div></div>
-      <div class="card-body">Chain-of-Thought Agent、Tree-of-Thought 探索、Plan-and-Execute 架构、Human-in-the-Loop 设计</div>
-      <div class="card-tags"><span class="tag">ToT 论文</span><span class="tag">Plan-and-Solve</span></div>
+      <div class="card-head"><div class="card-icon">🌳</div><div class="card-title">高级推理与编排</div></div>
+      <div class="card-body">Chain-of-Thought Agent、Tree-of-Thought 探索、Plan-and-Execute 架构、Human-in-the-Loop 断点设计、Routing（意图路由）、Parallelization（并行执行）</div>
+      <div class="card-tags"><span class="tag">ToT</span><span class="tag tag-new">Routing Pattern</span><span class="tag tag-new">Parallelization</span></div>
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-icon">🛡️</div><div class="card-title">错误处理与鲁棒性</div></div>
-      <div class="card-body">工具调用失败回退、循环检测与终止条件、输出验证、Guardrails 安全边界、异常状态恢复</div>
+      <div class="card-head"><div class="card-icon">🛡️</div><div class="card-title">鲁棒性与安全</div></div>
+      <div class="card-body">工具调用失败回退、循环检测与终止条件、输出验证（Schema Validation）、Guardrails 安全边界、Prompt Injection 防御、异常状态恢复</div>
       <div class="card-tags"><span class="tag">Guardrails AI</span><span class="tag">NeMo Guardrails</span></div>
     </div>
   </div>
   <div class="resources-block">
     <h4>推荐资源</h4>
-    <div class="resource-item">Andrew Ng — 4 Agentic Design Patterns（DeepLearning.AI 博客）</div>
+    <div class="resource-item">Andrew Ng — 4 Agentic Design Patterns（DeepLearning.AI）</div>
+    <div class="resource-item">Anthropic — Building Effective Agents（编排模式详解）</div>
     <div class="resource-item">LangGraph — Agent Architecture 深入讲解</div>
-    <div class="resource-item">论文：ReAct、Reflexion、Toolformer、Plan-and-Solve</div>
+    <div class="resource-item">论文：ReAct、Reflexion、Toolformer、Plan-and-Solve、LATS</div>
   </div>
 </div>
 
-<!-- Phase 4 -->
+<!-- ─── Phase 4 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
-  <div class="phase-label">Phase 04 · 多 Agent 协作</div>
-  <div class="phase-title">Multi-Agent 系统</div>
-  <div class="phase-desc">从单打独斗到团队协作。设计多个 Agent 之间的通信、分工与协调机制。</div>
+  <div class="phase-label">Phase 04 · 工具生态</div>
+  <div class="phase-title">MCP、外部工具与集成</div>
+  <div class="phase-desc">让 Agent 连接真实世界。掌握 MCP 协议、API 集成、浏览器控制和代码执行。</div>
   <div class="cards">
     <div class="card">
-      <div class="card-head"><div class="card-icon">👥</div><div class="card-title">Multi-Agent 架构</div></div>
-      <div class="card-body">Coordinator-Worker 模式、Supervisor 架构、对等协商模式、层级委派、Agent 间通信协议</div>
-      <div class="card-tags"><span class="tag">CrewAI</span><span class="tag">AutoGen</span><span class="tag">LangGraph</span></div>
+      <div class="card-head"><div class="card-icon">🔗</div><div class="card-title">MCP（Model Context Protocol）</div></div>
+      <div class="card-body">Anthropic MCP 协议架构（Host / Client / Server）、MCP Server 开发（Resources、Tools、Prompts）、工具发现与注册、社区 MCP Servers 生态</div>
+      <div class="card-tags"><span class="tag tag-new">MCP 协议</span><span class="tag">Claude Desktop</span><span class="tag tag-new">MCP Hub</span></div>
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-icon">🛠️</div><div class="card-title">主流 Multi-Agent 框架</div></div>
-      <div class="card-body">CrewAI（角色定义与任务编排）、Microsoft AutoGen（多轮对话式协作）、LangGraph（图状态机编排）、Agno/Phidata</div>
-      <div class="card-tags"><span class="tag">CrewAI</span><span class="tag">AutoGen</span><span class="tag">Agno</span></div>
+      <div class="card-head"><div class="card-icon">🌐</div><div class="card-title">外部工具集成</div></div>
+      <div class="card-body">Web 搜索 API、代码执行沙箱（E2B、Modal）、数据库读写、文件系统操作、第三方 SaaS（Slack、Gmail、GitHub、Notion）</div>
+      <div class="card-tags"><span class="tag">E2B</span><span class="tag">Composio</span><span class="tag tag-new">Modal</span></div>
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-icon">🏗️</div><div class="card-title">实战项目</div></div>
-      <div class="card-body">研究团队 Agent（搜索+分析+写作）、软件开发 Agent 团队、客服升级系统、数据分析 Pipeline Agent</div>
+      <div class="card-head"><div class="card-icon">🖥️</div><div class="card-title">Computer Use & 浏览器 Agent</div></div>
+      <div class="card-body">Anthropic Computer Use（屏幕截图 + 坐标操作）、浏览器自动化（Browser Use、Playwright MCP）、GUI Agent 架构设计</div>
+      <div class="card-tags"><span class="tag tag-new">Computer Use</span><span class="tag tag-new">Browser Use</span><span class="tag">Playwright</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">实战项目</div></div>
+      <div class="card-body">① 开发一个自定义 MCP Server（连接你常用的工具）② 构建浏览器自动化 Agent（自动填表、数据抓取）</div>
       <div class="card-tags"><span class="tag">Hands-on</span></div>
     </div>
   </div>
   <div class="resources-block">
     <h4>推荐资源</h4>
-    <div class="resource-item">CrewAI 官方文档与示例</div>
-    <div class="resource-item">Microsoft AutoGen 教程</div>
-    <div class="resource-item">DeepLearning.AI — Multi AI Agent Systems with CrewAI</div>
-    <div class="resource-item">Krishnaik06/Roadmap-To-Learn-Agentic-AI（GitHub）</div>
-  </div>
-</div>
-
-<!-- Phase 5 -->
-<div class="phase">
-  <div class="phase-dot"></div>
-  <div class="phase-label">Phase 05 · 工具生态</div>
-  <div class="phase-title">MCP、外部工具与集成</div>
-  <div class="phase-desc">让 Agent 连接真实世界。掌握 MCP 协议、API 集成和工具生态系统。</div>
-  <div class="cards">
-    <div class="card">
-      <div class="card-head"><div class="card-icon">🔗</div><div class="card-title">MCP（Model Context Protocol）</div></div>
-      <div class="card-body">Anthropic MCP 协议原理、MCP Server 开发、工具发现与注册机制、标准化工具接口</div>
-      <div class="card-tags"><span class="tag">Anthropic MCP</span><span class="tag">Claude Desktop</span></div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div class="card-icon">🌐</div><div class="card-title">外部工具集成</div></div>
-      <div class="card-body">Web 搜索、代码执行沙箱、数据库读写、文件系统操作、第三方 API（Slack、Gmail、GitHub）</div>
-      <div class="card-tags"><span class="tag">Browser Use</span><span class="tag">E2B</span><span class="tag">Composio</span></div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div class="card-icon">🖥️</div><div class="card-title">Computer Use & 浏览器 Agent</div></div>
-      <div class="card-body">Anthropic Computer Use、浏览器自动化 Agent（Browser Use、Playwright）、GUI 交互 Agent</div>
-      <div class="card-tags"><span class="tag">Computer Use</span><span class="tag">Browser Use</span></div>
-    </div>
-  </div>
-  <div class="resources-block">
-    <h4>推荐资源</h4>
-    <div class="resource-item">Anthropic MCP 官方文档</div>
+    <div class="resource-item">Anthropic MCP 官方文档与规范</div>
     <div class="resource-item">MCP Server 开发指南与社区 Servers 列表</div>
     <div class="resource-item">Browser Use — 开源浏览器 Agent 框架</div>
     <div class="resource-item">E2B — 代码执行沙箱</div>
   </div>
 </div>
 
-<!-- Phase 6 -->
+<!-- ─── Phase 5 ─── -->
 <div class="phase">
   <div class="phase-dot"></div>
-  <div class="phase-label">Phase 06 · 生产部署</div>
-  <div class="phase-title">Agent 评估、安全与上线</div>
-  <div class="phase-desc">把 Agent 从 Demo 变成产品。解决评估、安全、成本和可靠性的工程难题。</div>
+  <div class="phase-label">Phase 05 · 多 Agent 协作</div>
+  <div class="phase-title">Multi-Agent 系统</div>
+  <div class="phase-desc">从单打独斗到团队协作。设计多个 Agent 之间的通信、分工与协调机制。</div>
   <div class="cards">
     <div class="card">
-      <div class="card-head"><div class="card-icon">📏</div><div class="card-title">Agent 评估</div></div>
-      <div class="card-body">任务完成率、工具调用准确率、延迟与成本指标、端到端 Benchmark、LLM-as-Judge 评估、AgentBench</div>
-      <div class="card-tags"><span class="tag">AgentBench</span><span class="tag">LangSmith</span></div>
+      <div class="card-head"><div class="card-icon">👥</div><div class="card-title">Multi-Agent 架构</div></div>
+      <div class="card-body">Coordinator-Worker 模式、Supervisor 层级架构、对等协商模式（Debate）、Swarm 动态路由、Agent 间消息传递协议</div>
+      <div class="card-tags"><span class="tag">CrewAI</span><span class="tag">AutoGen</span><span class="tag tag-new">OpenAI Swarm</span></div>
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-icon">🔒</div><div class="card-title">安全与治理</div></div>
-      <div class="card-body">权限最小化原则、Prompt Injection 防御、Human-in-the-Loop 审批流、审计日志、沙箱隔离</div>
-      <div class="card-tags"><span class="tag">OWASP LLM Top 10</span><span class="tag">Guardrails</span></div>
+      <div class="card-head"><div class="card-icon">🛠️</div><div class="card-title">主流 Multi-Agent 框架</div></div>
+      <div class="card-body">CrewAI（角色定义与任务编排）、Microsoft AutoGen / AG2（多轮对话式协作）、LangGraph（图状态机编排）、Google ADK（Agent Development Kit）</div>
+      <div class="card-tags"><span class="tag">CrewAI</span><span class="tag tag-new">AG2</span><span class="tag tag-new">Google ADK</span></div>
     </div>
-    <div class="card">
-      <div class="card-head"><div class="card-icon">🚀</div><div class="card-title">部署与运维</div></div>
-      <div class="card-body">Agent 服务架构设计、异步任务队列、状态持久化、可观测性（Tracing、Logging）、成本控制与模型路由</div>
-      <div class="card-tags"><span class="tag">Langfuse</span><span class="tag">Arize Phoenix</span></div>
-    </div>
-    <div class="card">
-      <div class="card-head"><div class="card-icon">🧪</div><div class="card-title">前沿方向</div></div>
-      <div class="card-body">自主 Agent（Devin、Manus 类）、Agent-to-Agent 通信协议（A2A）、Agent OS 概念、自我进化 Agent</div>
-      <div class="card-tags"><span class="tag">Devin</span><span class="tag">Google A2A</span><span class="tag">Agent Protocol</span></div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">实战项目</div></div>
+      <div class="card-body">① 研究团队 Agent（搜索 → 分析 → 写作 → 审校）② 软件开发 Agent 团队（PM → Dev → QA → Deploy）③ 客服智能路由系统</div>
+      <div class="card-tags"><span class="tag">Hands-on</span></div>
     </div>
   </div>
   <div class="resources-block">
     <h4>推荐资源</h4>
-    <div class="resource-item">KDnuggets — Agentic AI: A Self-Study Roadmap</div>
-    <div class="resource-item">Langfuse — 开源 LLM 可观测性平台</div>
-    <div class="resource-item">OWASP — LLM Top 10 安全风险清单</div>
-    <div class="resource-item">Anthropic — Building Effective Agents（官方最佳实践）</div>
+    <div class="resource-item">CrewAI 官方文档与示例</div>
+    <div class="resource-item">Microsoft AutoGen / AG2 教程</div>
+    <div class="resource-item">DeepLearning.AI — Multi AI Agent Systems with CrewAI</div>
+    <div class="resource-item">Google ADK 官方文档</div>
   </div>
 </div>
 
-</div><!-- end timeline -->
+<!-- ─── Phase 6 ─── -->
+<div class="phase">
+  <div class="phase-dot"></div>
+  <div class="phase-label">Phase 06 · Agentic 应用</div>
+  <div class="phase-title">Agentic Coding & 垂直场景</div>
+  <div class="phase-desc">2025 年最火热的 Agent 应用场景：Agentic Coding 正在重塑软件开发。</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-head"><div class="card-icon">💻</div><div class="card-title">Agentic Coding</div></div>
+      <div class="card-body">Claude Code（终端原生 Coding Agent）、Cursor / Windsurf（IDE Agent）、GitHub Copilot Agent、Devin / OpenHands、代码生成 → 测试 → 调试全自动闭环</div>
+      <div class="card-tags"><span class="tag tag-new">Claude Code</span><span class="tag tag-new">Cursor</span><span class="tag tag-new">Devin</span><span class="tag tag-new">OpenHands</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🏢</div><div class="card-title">垂直行业 Agent</div></div>
+      <div class="card-body">客服 / 销售 Agent、金融数据分析 Agent、医疗辅助 Agent、法律研究 Agent、教育辅导 Agent</div>
+      <div class="card-tags"><span class="tag">Domain-specific</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🔊</div><div class="card-title">Voice Agent</div></div>
+      <div class="card-body">语音 Agent 架构（STT + LLM + TTS Pipeline）、OpenAI Realtime API、低延迟语音交互、电话 AI Agent（Bland AI、Vapi）</div>
+      <div class="card-tags"><span class="tag tag-new">Voice Agent</span><span class="tag tag-new">Realtime API</span><span class="tag tag-new">Vapi</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">实战项目</div></div>
+      <div class="card-body">① 用 Claude Code 完成一个完整项目的开发 ② 搭建一个语音客服 Agent（Voice + RAG + Tool Use）</div>
+      <div class="card-tags"><span class="tag">Hands-on</span></div>
+    </div>
+  </div>
+  <div class="resources-block">
+    <h4>推荐资源</h4>
+    <div class="resource-item">Anthropic — Claude Code 官方文档</div>
+    <div class="resource-item">Cursor / Windsurf 官方文档与最佳实践</div>
+    <div class="resource-item">OpenAI — Realtime API 文档</div>
+    <div class="resource-item">Vapi — Voice AI Platform 文档</div>
+  </div>
+</div>
+
+<!-- ─── Phase 7 ─── -->
+<div class="phase">
+  <div class="phase-dot"></div>
+  <div class="phase-label">Phase 07 · 生产上线</div>
+  <div class="phase-title">评估、安全与前沿</div>
+  <div class="phase-desc">把 Agent 从 Demo 变成产品。解决评估、安全、成本和可靠性的工程难题。关注前沿方向。</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-head"><div class="card-icon">📏</div><div class="card-title">Agent 评估</div></div>
+      <div class="card-body">任务完成率与成功路径分析、工具调用准确率、延迟与成本指标、端到端 Benchmark（AgentBench、SWE-bench）、LLM-as-Judge 评估</div>
+      <div class="card-tags"><span class="tag">AgentBench</span><span class="tag tag-new">SWE-bench</span><span class="tag">LangSmith</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🔒</div><div class="card-title">安全与治理</div></div>
+      <div class="card-body">权限最小化原则、Prompt Injection 防御（多层检测）、Human-in-the-Loop 审批流、审计日志、沙箱隔离、OWASP LLM Top 10</div>
+      <div class="card-tags"><span class="tag">OWASP</span><span class="tag">Guardrails</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🚀</div><div class="card-title">部署与运维</div></div>
+      <div class="card-body">Agent 服务架构设计、异步任务队列、状态持久化（Checkpoint）、可观测性（Distributed Tracing）、成本控制与模型路由</div>
+      <div class="card-tags"><span class="tag">Langfuse</span><span class="tag tag-new">Arize Phoenix</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🧪</div><div class="card-title">前沿方向</div></div>
+      <div class="card-body">Agent-to-Agent 通信协议（Google A2A Protocol）、Agent OS / Agent Marketplace 概念、自主研发 Agent（Manus / OpenHands 类）、自我进化 Agent</div>
+      <div class="card-tags"><span class="tag tag-new">A2A Protocol</span><span class="tag tag-new">Manus</span><span class="tag tag-new">Agent Protocol</span></div>
+    </div>
+  </div>
+  <div class="resources-block">
+    <h4>推荐资源</h4>
+    <div class="resource-item">Langfuse — 开源 LLM 可观测性平台</div>
+    <div class="resource-item">OWASP — LLM Top 10 安全风险清单</div>
+    <div class="resource-item">Anthropic — Building Effective Agents（官方最佳实践）</div>
+    <div class="resource-item">Google — A2A Protocol 官方文档</div>
+  </div>
+</div>
+
+</div><!-- end agent-timeline -->
 </div><!-- end agent-section -->
 
+
+<!-- ══════════════════════════════════════════════════
+     FAST TRACK
+     ══════════════════════════════════════════════════ -->
+<div id="fast-section" class="roadmap-section">
+
+<div class="fast-track-callout">
+  <h3>⚡ 谁适合快速通道？</h3>
+  <p>如果你是应用层开发者（产品工程师、全栈开发、业务方），不需要从头学数学和预训练。这条路线帮你在 4-8 周内具备构建 AI Agent 应用的核心能力。</p>
+  <div class="steps">
+    <span class="step-tag">API 调用</span>
+    <span class="step-arrow">→</span>
+    <span class="step-tag">Prompt Engineering</span>
+    <span class="step-arrow">→</span>
+    <span class="step-tag">RAG</span>
+    <span class="step-arrow">→</span>
+    <span class="step-tag">Agent 框架</span>
+    <span class="step-arrow">→</span>
+    <span class="step-tag">生产部署</span>
+  </div>
+</div>
+
+<div class="summary-grid">
+  <div class="summary-card"><div class="number" style="color:var(--accent-fast-light)">4</div><div class="label">学习阶段</div></div>
+  <div class="summary-card"><div class="number" style="color:var(--accent-fast-light)">4-8 周</div><div class="label">建议周期</div></div>
+  <div class="summary-card"><div class="number" style="color:var(--accent-fast-light)">12+</div><div class="label">核心技能点</div></div>
+  <div class="summary-card"><div class="number" style="color:var(--accent-fast-light)">6</div><div class="label">实战项目</div></div>
+</div>
+
+<div class="timeline fast-timeline">
+
+<!-- ─── Fast Phase 1 ─── -->
+<div class="phase">
+  <div class="phase-dot"></div>
+  <div class="phase-label">Week 1-2 · 快速上手</div>
+  <div class="phase-title">LLM API & Prompt Engineering</div>
+  <div class="phase-desc">跳过理论，直接动手。学会调用主流 LLM API 并掌握让模型按你期望输出的技巧。</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🔑</div><div class="card-title">LLM API 调用</div></div>
+      <div class="card-body">OpenAI / Anthropic / Google API 注册与调用、Messages API 基本用法、流式响应处理、Token 计费与成本估算、模型选择策略（性价比 vs 能力）</div>
+      <div class="card-tags"><span class="tag">OpenAI API</span><span class="tag">Anthropic API</span><span class="tag">Google Gemini</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">💬</div><div class="card-title">Prompt Engineering 实战</div></div>
+      <div class="card-body">System Prompt 设计模式、Few-shot / Chain-of-Thought、Structured Output（JSON Mode、Tool Use 强制输出）、Prompt 模板管理、Prompt Injection 防御</div>
+      <div class="card-tags"><span class="tag">Anthropic Guide</span><span class="tag">OpenAI Cookbook</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">动手项目</div></div>
+      <div class="card-body">① 构建一个多角色 AI 聊天应用 ② 实现一个结构化数据提取工具（简历 / 发票 → JSON）</div>
+      <div class="card-tags"><span class="tag">Hands-on</span></div>
+    </div>
+  </div>
+  <div class="resources-block">
+    <h4>推荐资源</h4>
+    <div class="resource-item">Anthropic — Prompt Engineering 官方文档</div>
+    <div class="resource-item">OpenAI Cookbook（GitHub）</div>
+    <div class="resource-item">DeepLearning.AI — ChatGPT Prompt Engineering for Developers</div>
+  </div>
+</div>
+
+<!-- ─── Fast Phase 2 ─── -->
+<div class="phase">
+  <div class="phase-dot"></div>
+  <div class="phase-label">Week 3-4 · 知识增强</div>
+  <div class="phase-title">RAG 系统搭建</div>
+  <div class="phase-desc">让 LLM 连接你的私有数据。从文档切分到向量检索，搭建实用的知识库问答系统。</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🔍</div><div class="card-title">RAG 核心流程</div></div>
+      <div class="card-body">文档加载与解析（PDF、Word、网页）、分块策略（Recursive、Semantic Chunking）、Embedding 生成与向量存储、检索 + Re-ranking + 生成</div>
+      <div class="card-tags"><span class="tag">LangChain</span><span class="tag">LlamaIndex</span><span class="tag">Chroma</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">⚡</div><div class="card-title">RAG 优化技巧</div></div>
+      <div class="card-body">Hybrid Search（向量 + BM25）、Query Rewriting、Contextual Retrieval、评估指标（Recall、Faithfulness、Relevance）</div>
+      <div class="card-tags"><span class="tag tag-new">Contextual Retrieval</span><span class="tag tag-new">RAGAS 评估</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">动手项目</div></div>
+      <div class="card-body">搭建企业文档问答系统（上传 PDF → 自动索引 → 对话式检索 → 引用来源）</div>
+      <div class="card-tags"><span class="tag">Hands-on</span></div>
+    </div>
+  </div>
+  <div class="resources-block">
+    <h4>推荐资源</h4>
+    <div class="resource-item">DeepLearning.AI — Building and Evaluating Advanced RAG</div>
+    <div class="resource-item">LangChain RAG 教程</div>
+    <div class="resource-item">Anthropic — Contextual Retrieval 博客</div>
+  </div>
+</div>
+
+<!-- ─── Fast Phase 3 ─── -->
+<div class="phase">
+  <div class="phase-dot"></div>
+  <div class="phase-label">Week 5-6 · Agent 构建</div>
+  <div class="phase-title">Agent 框架与工具集成</div>
+  <div class="phase-desc">从 RAG 升级到 Agent。让 AI 学会自主推理、调用工具、连接外部系统。</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🤖</div><div class="card-title">Agent 框架实战</div></div>
+      <div class="card-body">LangGraph 状态机 Agent（推荐入门）、ReAct 模式实现、Tool 注册与调用、Human-in-the-Loop 设计</div>
+      <div class="card-tags"><span class="tag">LangGraph</span><span class="tag tag-new">Pydantic AI</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🔗</div><div class="card-title">MCP & 工具生态</div></div>
+      <div class="card-body">MCP 协议快速入门、使用社区 MCP Servers（GitHub、Slack、数据库）、开发自定义 MCP Server</div>
+      <div class="card-tags"><span class="tag tag-new">MCP</span><span class="tag">Composio</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">动手项目</div></div>
+      <div class="card-body">① Agentic RAG 系统（Agent 自主判断何时检索、何时回答）② 工作流自动化 Agent（读邮件 → 查日历 → 生成报告）</div>
+      <div class="card-tags"><span class="tag">Hands-on</span></div>
+    </div>
+  </div>
+  <div class="resources-block">
+    <h4>推荐资源</h4>
+    <div class="resource-item">LangGraph — 从零搭建 Agent 教程</div>
+    <div class="resource-item">Anthropic MCP 快速入门</div>
+    <div class="resource-item">DeepLearning.AI — AI Agents in LangGraph</div>
+  </div>
+</div>
+
+<!-- ─── Fast Phase 4 ─── -->
+<div class="phase">
+  <div class="phase-dot"></div>
+  <div class="phase-label">Week 7-8 · 上线交付</div>
+  <div class="phase-title">产品化与部署</div>
+  <div class="phase-desc">让你的 Agent 从原型变成可交付的产品。解决安全、监控、成本的核心工程问题。</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-head"><div class="card-icon">🚀</div><div class="card-title">产品化工程</div></div>
+      <div class="card-body">前端 UI 集成（Streamlit、Gradio、Next.js）、API 服务封装（FastAPI）、认证与权限管理、错误处理与重试机制</div>
+      <div class="card-tags"><span class="tag">FastAPI</span><span class="tag">Streamlit</span><span class="tag">Vercel AI SDK</span></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon">📊</div><div class="card-title">监控与优化</div></div>
+      <div class="card-body">Tracing & Logging（Langfuse / LangSmith）、成本监控与优化、模型选择路由（复杂任务用强模型，简单任务用小模型）、Guardrails 配置</div>
+      <div class="card-tags"><span class="tag">Langfuse</span><span class="tag">LangSmith</span></div>
+    </div>
+    <div class="card project-card">
+      <div class="card-head"><div class="card-icon">🏋️</div><div class="card-title">毕业项目</div></div>
+      <div class="card-body">搭建一个完整的 AI Agent 产品：前端 UI + Agent 后端 + RAG + 工具集成 + Tracing 监控，部署上线并迭代</div>
+      <div class="card-tags"><span class="tag">Capstone Project</span></div>
+    </div>
+  </div>
+  <div class="resources-block">
+    <h4>推荐资源</h4>
+    <div class="resource-item">Vercel AI SDK — 前端 AI 集成框架</div>
+    <div class="resource-item">Langfuse — 开源可观测性平台</div>
+    <div class="resource-item">Chip Huyen —《AI Engineering》</div>
+  </div>
+</div>
+
+</div><!-- end fast-timeline -->
+</div><!-- end fast-section -->
+
 </div><!-- end content -->
+
+<div class="footer-note">
+  LLM & AI Agent Learning Roadmap V2 · 2025 · Built with care
+</div>
 
 <script>
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.roadmap-section').forEach(s => s.classList.remove('active'));
-  
+
   if (tab === 'llm') {
     document.querySelector('.llm-btn').classList.add('active');
     document.getElementById('llm-section').classList.add('active');
-  } else {
+  } else if (tab === 'agent') {
     document.querySelector('.agent-btn').classList.add('active');
     document.getElementById('agent-section').classList.add('active');
+  } else {
+    document.querySelector('.fast-btn').classList.add('active');
+    document.getElementById('fast-section').classList.add('active');
   }
-  
-  // Re-trigger scroll animations
+
   setTimeout(() => observePhases(), 100);
   window.scrollTo({ top: document.querySelector('.content').offsetTop - 40, behavior: 'smooth' });
 }
@@ -840,11 +1234,9 @@ function switchTab(tab) {
 function observePhases() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.phase').forEach(phase => {
     phase.classList.remove('visible');
